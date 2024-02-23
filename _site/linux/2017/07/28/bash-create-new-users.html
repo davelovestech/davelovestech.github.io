@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Creating New Linux Users with Bash | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Creating New Linux Users with Bash" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A shell script is a computer program that gets run in the terminal. Bash is a command line interface that lets you run shell scripts in a Linux or Unix environment. Most of the bioinformatics scientists that I’ve talked to have mentioned that Bash is an important skill to learn. That’s why I’m working through the Linux Shell Scripting Course on Udemy. The course has a great intro and, thankfully, it has exercises that you need to work through on your own." />
+<meta property="og:description" content="A shell script is a computer program that gets run in the terminal. Bash is a command line interface that lets you run shell scripts in a Linux or Unix environment. Most of the bioinformatics scientists that I’ve talked to have mentioned that Bash is an important skill to learn. That’s why I’m working through the Linux Shell Scripting Course on Udemy. The course has a great intro and, thankfully, it has exercises that you need to work through on your own." />
+<link rel="canonical" href="http://localhost:4000/linux/2017/07/28/bash-create-new-users.html" />
+<meta property="og:url" content="http://localhost:4000/linux/2017/07/28/bash-create-new-users.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2017-07-28T14:10:00-07:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Creating New Linux Users with Bash" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2017-07-28T14:10:00-07:00","datePublished":"2017-07-28T14:10:00-07:00","description":"A shell script is a computer program that gets run in the terminal. Bash is a command line interface that lets you run shell scripts in a Linux or Unix environment. Most of the bioinformatics scientists that I’ve talked to have mentioned that Bash is an important skill to learn. That’s why I’m working through the Linux Shell Scripting Course on Udemy. The course has a great intro and, thankfully, it has exercises that you need to work through on your own.","headline":"Creating New Linux Users with Bash","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/linux/2017/07/28/bash-create-new-users.html"},"url":"http://localhost:4000/linux/2017/07/28/bash-create-new-users.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Creating New Linux Users with Bash</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2017-07-28T14:10:00-07:00" itemprop="datePublished">Jul 28, 2017
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>A shell script is a computer program that gets run in the terminal. Bash is a command line interface that lets you run shell scripts in a Linux or Unix environment. Most of the bioinformatics scientists that I’ve talked to have mentioned that Bash is an important skill to learn. That’s why I’m working through the <a href="https://www.udemy.com/linux-shell-scripting-projects/">Linux Shell Scripting Course on Udemy</a>. The course has a great intro and, thankfully, it has exercises that you need to work through on your own.</p>
+
+<p>The first challenge, exercise 2, is to create a Bash Script that automates the creation of new Linux users. You’re supposed to pretend that you’re a busy Linux administrator trying to save time, haha. There are a couple of requirements for the script, and I’ll use Markdown to create a bulleted list with sub-bullets!</p>
+
+<ul>
+  <li>The script can only run if the current user is root.</li>
+  <li>The script must get username, real name, and password.</li>
+  <li>The script creates the user home directory w/ specified password and real name.
+    <ul>
+      <li>Check that user was created AND that password was added. It’s important to note that the home directory creation and password addition are <strong>separate</strong> steps, so they’ll need separate checks.</li>
+      <li>Require the user to create a new password creation on 1st login.</li>
+    </ul>
+  </li>
+  <li>Finally, it needs to display the username, password, and hostname.</li>
+</ul>
+
+<p>First, I’ll show off the final working version. As you can see, it won’t run when a regular user tries to run it. It can only run when “sudo” is prefacing the call to the program. Also, you’ll see the output of the functional script:</p>
+
+<p><img src="/assets/bash_create_user/root_works_user_creation.jpg" alt="Complete Script Demo" /></p>
+
+<p>I’m told that I don’t necessarily need to start the script with “#!/bin/bash”, <em>BUT</em> I’ll eventually need to … apparently I’ll encounter different default script interpreters on different operating systems. You’ll see plenty of in-script comments because I’m all about keeping detailed track of my work! An if statement checks that the UID (user id) is -ne (not equal to) 0 (root is 0). If the script-caller is <strong>not root</strong>, then the script exits with a status of 1 (1 means failed). If the script-caller is root, the script continues to the next section.
+<img src="/assets/bash_create_user/specify_interpreter_demand_root.jpg" alt="Specify Interpreter &amp; Demand Root" /></p>
+
+<p>Scripts aren’t automatically executable by all users after writing them. You need to enable execution with “chmod 755” (user can read, write, and execute). This was my first time writing a shell script on my own, so I was wondering why scripts were green <em>or</em> white … here’s the section of terminal work where I figured out that executable scripts are green!
+<img src="/assets/bash_create_user/green_make_script_executable.jpg" alt="Make Executable" /></p>
+
+<p>The syntax for requesting input from the user is read -p ‘TEXT_TO_SHOW_USER’ VARIABLE_TO_STORE_THEIR_RESPONSE. Here you can see the script requests the USER_NAME, COMMENT (real name), and PASSWORD for the user. The script uses useradd -c to add the comment about the user full name and useradd -m for creating the user’s home directory. It uses the if syntax to check that the previous command worked. ${?} is the exit status of the last command (0 means it worked) and -ne 0 (not equal to 0) to report the failure to create the home directory.
+<img src="/assets/bash_create_user/get_info_create_user_home.jpg" alt="get info, create home, check works" /></p>
+
+<p>The password creating syntax is a little funky … it uses a pipe to echo the password variable, ${PASSWORD}, into the password creation command (passwd). The script uses a previously discussed syntax to check that the password was successfully created. It then uses the -e flag for the passwd command to request the user to create a new password once they login for the first time. Finally, the USER_NAME, HOST_NAME, and PASSWORD variables are printed to the screen.<br />
+<img src="/assets/bash_create_user/set_password_echo_changes.jpg" alt="set password, check password, echo changes" /></p>
+
+<p>I <em>really</em> enjoyed this exercise. The Udemy instructor did a great job at slowy introducing the concepts required over four different guided exercises. I like that exercises are required because you’re not likely to remember how to do things unless you have to do them without help from an outside source. I’m looking forward to completing more shell scripting exercises on Udemy!</p>
+
+
+  </div><a class="u-url" href="/linux/2017/07/28/bash-create-new-users.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

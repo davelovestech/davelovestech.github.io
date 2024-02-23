@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Adjusting the AD Group Policy for Firewall | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Adjusting the AD Group Policy for Firewall" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In previous articles I have enabled Active Directory (AD) in Windows Server 2012 and added a computer and a user to that AD instance. But what good is Active Directory if you can’t use it to push Group Policies to the relevant entities? In this post I’ll show you how I enabled and disabled the Windows Firewall, for a client Windows 10 Enterprise OS, from the Windows Server 2012 Server instance." />
+<meta property="og:description" content="In previous articles I have enabled Active Directory (AD) in Windows Server 2012 and added a computer and a user to that AD instance. But what good is Active Directory if you can’t use it to push Group Policies to the relevant entities? In this post I’ll show you how I enabled and disabled the Windows Firewall, for a client Windows 10 Enterprise OS, from the Windows Server 2012 Server instance." />
+<link rel="canonical" href="http://localhost:4000/active_directory/2019/05/03/adjusting-firewall-group-policy.html" />
+<meta property="og:url" content="http://localhost:4000/active_directory/2019/05/03/adjusting-firewall-group-policy.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-05-03T05:00:40-07:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Adjusting the AD Group Policy for Firewall" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-05-03T05:00:40-07:00","datePublished":"2019-05-03T05:00:40-07:00","description":"In previous articles I have enabled Active Directory (AD) in Windows Server 2012 and added a computer and a user to that AD instance. But what good is Active Directory if you can’t use it to push Group Policies to the relevant entities? In this post I’ll show you how I enabled and disabled the Windows Firewall, for a client Windows 10 Enterprise OS, from the Windows Server 2012 Server instance.","headline":"Adjusting the AD Group Policy for Firewall","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/active_directory/2019/05/03/adjusting-firewall-group-policy.html"},"url":"http://localhost:4000/active_directory/2019/05/03/adjusting-firewall-group-policy.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Adjusting the AD Group Policy for Firewall</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-05-03T05:00:40-07:00" itemprop="datePublished">May 3, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>In previous articles I have enabled Active Directory (AD) in Windows Server 2012 and added a computer and a user to that AD instance. But what good is Active Directory if you can’t use it to push Group Policies to the relevant entities? In this post I’ll show you how I enabled and disabled the Windows Firewall, for a client Windows 10 Enterprise OS, from the Windows Server 2012 Server instance.</p>
+
+<p>You can make changes like that in the Group Policy Management Editor. They are called Group Policy Objects (GPO).</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/select-windows-firewall-settings.PNG" alt="select-windows-firewall-settings" /></p>
+
+<p>I went the route of Forst &gt; Domains &gt; Example.com &gt; Lab to arrive at Computers. I right-clicked “Computers” and chose “Create a GPO in this domain, and Link it here…” I went with “Firewall Rules” for the new GPO.</p>
+
+<p>I’m gonna do something very silly: disable the Windows Firewall. See how it’s currently enabled in the Windows 10 Enterprise system?</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/firewall-is-on.PNG" alt="firewall-is-on" /></p>
+
+<p>Heading back into the Windows Server 2012 system, I opened up the Windows Firewall Properties by going this route: Computer Configuration &gt; Policies &gt; Windows Settings &gt; Security Settings &gt; Windows Firewall with Advanced Security. Windows Firewall Properties is under the Public Profile heading. I selected “Off” for the firewall state.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/turn-firewall-off.PNG" alt="turn-firewall-off" /></p>
+
+<p>BUT, going back to the Windows 10 Enterprise system, the firewall is still on … why?</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/firewall-is-on.PNG" alt="firewall-is-on" /></p>
+
+<p>It’s because the Group Policy Object hasn’t hit the Windows 10 Enterprise system yet. I opened up the command prompt and ran gpupdate /force to get the most recent Group Policy Object.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/gpupdate-force.PNG" alt="gpupdate-force" /></p>
+
+<p>That’s when the Windows 10 Enterprise Firewall turned off. To be clear, this is what’s happened so far:</p>
+
+<ul>
+  <li>I created a GPO for the firewall being off in Windows Server 2012</li>
+  <li>I requested the most recent GPO from the server while logged in on the Windows 10 Enterprise system</li>
+  <li>The Windows 10 Enterprise Firewall was turned off</li>
+</ul>
+
+<p><img src="/assets/2019-04-06-add-group-policy/windows-firewall-off.PNG" alt="windows-firewall-off" /></p>
+
+<p>The Group Policy change from the Windows Server 2012 system worked! That’s what I wanted to cover in this post. I then went back into Windows Server 2012 and adjusted the firewall to be on.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/FINAL-windows-firewall-now-on.PNG" alt="FINAL-windows-firewall-now-on" /></p>
+
+<p>I forced anther Group Policy update and found that the firewall was back on :)</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/FINAL-windows-firewall-back-on.PNG" alt="FINAL-windows-firewall-back-on" /></p>
+
+  </div><a class="u-url" href="/active_directory/2019/05/03/adjusting-firewall-group-policy.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

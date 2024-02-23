@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Enabling NAS with SAMBA | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Enabling NAS with SAMBA" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I want to create a Network-attached storage (NAS) system for my home network because that’d be cool. I don’t need NAS because file sharing across platforms is an issue that Dropbox seems to have completely solved. I pay for the Dropbox Plus Plan, so I can have up to 1 TB of files automatically updated across my macOS, Windows, &amp; Linux systems … it even updates my files to my Android phone! I don’t have an iPhone, but I imagine the service would work just as well over there." />
+<meta property="og:description" content="I want to create a Network-attached storage (NAS) system for my home network because that’d be cool. I don’t need NAS because file sharing across platforms is an issue that Dropbox seems to have completely solved. I pay for the Dropbox Plus Plan, so I can have up to 1 TB of files automatically updated across my macOS, Windows, &amp; Linux systems … it even updates my files to my Android phone! I don’t have an iPhone, but I imagine the service would work just as well over there." />
+<link rel="canonical" href="http://localhost:4000/networking/2019/04/04/SAMBA-SMB-NAS.html" />
+<meta property="og:url" content="http://localhost:4000/networking/2019/04/04/SAMBA-SMB-NAS.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-04T12:00:40-07:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Enabling NAS with SAMBA" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-04-04T12:00:40-07:00","datePublished":"2019-04-04T12:00:40-07:00","description":"I want to create a Network-attached storage (NAS) system for my home network because that’d be cool. I don’t need NAS because file sharing across platforms is an issue that Dropbox seems to have completely solved. I pay for the Dropbox Plus Plan, so I can have up to 1 TB of files automatically updated across my macOS, Windows, &amp; Linux systems … it even updates my files to my Android phone! I don’t have an iPhone, but I imagine the service would work just as well over there.","headline":"Enabling NAS with SAMBA","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/networking/2019/04/04/SAMBA-SMB-NAS.html"},"url":"http://localhost:4000/networking/2019/04/04/SAMBA-SMB-NAS.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Enabling NAS with SAMBA</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-04-04T12:00:40-07:00" itemprop="datePublished">Apr 4, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I want to create a Network-attached storage (NAS) system for my home network because that’d be cool. I don’t need NAS  because file sharing across platforms is an issue that <a href="www.dropbox.com">Dropbox</a> seems to have completely solved. I pay for the Dropbox Plus Plan, so I can have up to 1 TB of files automatically updated across my macOS, Windows, &amp; Linux systems … it even updates my files to my Android phone! I don’t have an iPhone, but I imagine the service would work just as well over there.</p>
+
+<p>Actually, I’m not even currently capable of building a system as good as Dropbox because I don’t yet know how to create a VPN that my off-site devices could get data from … so, to be really clear, this NAS project is just for fun!</p>
+
+<p>As has become the norm, I’ll be building my NAS with a Raspberry Pi; it’s got 32 GB of storage, so it can already kinda act as a NAS, but I’m adding a 1 TB USB drive to give is the sort of storage that I’d like. I’ve seen some tutorials that create a RAID-like system with multiple 1 TB drives, but I don’t yet have the equipment to make a system like that.</p>
+
+<p>If you’re interested in following along, I’m using the <a href="https://www.howtogeek.com/139433/how-to-turn-a-raspberry-pi-into-a-low-power-network-storage-device/">How-To Geek guide located here.</a> I could use PuTTY in Windows to connect, but I prefer SSH, so I’ll log on to my Pi from Ubuntu like this:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span>ssh pi@192.168.1.3
+<span class="go">The authenticity of host '192.168.1.3 (192.168.1.3)' can't be established.
+ECDSA key fingerprint is SHA256:YNNhELJ5x8AWL48H5mYA0ueC+5nElZkmYKy6wNVeFHE.
+Are you sure you want to continue connecting (yes/no)? y
+Please type 'yes' or 'no': yes
+Warning: Permanently added '192.168.1.3' (ECDSA) to the list of known hosts.
+pi@192.168.1.3's password:
+</span><span class="gp">Linux raspberrypi 4.14.98-v7+ #</span>1200 SMP Tue Feb 12 20:27:48 GMT 2019 armv7l
+<span class="go">
+</span><span class="gp">The programs included with the Debian GNU/Linux system are free software;</span><span class="w">
+</span><span class="go">the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Fri Apr  5 10:48:07 2019 from 192.168.1.2
+</span></code></pre></div></div>
+
+<p>The 1 TB drive that I’ll be using as a NAS is formatted as NTFS, so Linux doesn’t innately have support for it. I could reformat to a FAT or ext system, but I want to be able to read and write from Windows; the last time I tried to read and write ext from Windows I had to install a plugin that didn’t work out to well. BUT, I realize that macOS can only read NTFS … maybe I should eventually change to a FAT-type format? &lt;- I might do that eventually, but I already have lots of data on the drive, so I’m keeping it NTFS for now.</p>
+
+<p>This command adds NTFS support for my Raspberry Pi:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>ntfs-3g
+</code></pre></div></div>
+
+<p>The drive is labeled as “TOSHIBA EXT.”</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">cd</span> /
+<span class="gp">pi@raspberrypi:/ $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">bin   dev  home  lost+found  mnt  proc  run   srv  tmp  var
+boot  etc  lib   media       opt  root  sbin  sys  usr
+</span><span class="gp">pi@raspberrypi:/ $</span><span class="w"> </span><span class="nb">cd </span>media
+<span class="gp">pi@raspberrypi:/media $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">pi
+</span><span class="gp">pi@raspberrypi:/media $</span><span class="w"> </span><span class="nb">cd </span>pi
+<span class="gp">pi@raspberrypi:/media/pi $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">SETTINGS  TOSHIBA EXT
+</span></code></pre></div></div>
+
+<p>I’ll need to install the SAMBA implementation of the Server Message Block (SMB) protocol so that my Linux-based Raspberry Pi can share to Windows. Note that nothing gets installed below cause I already installed SAMBA for my print server project.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:/media/pi $</span><span class="w"> </span><span class="nb">sudo </span>apt-get <span class="nb">install </span>samba samba-common-bin
+<span class="go">Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+samba is already the newest version (2:4.5.16+dfsg-1).
+samba-common-bin is already the newest version (2:4.5.16+dfsg-1).
+samba-common-bin set to manually installed.
+The following package was automatically installed and is no longer required:
+  realpath
+Use 'sudo apt autoremove' to remove it.
+0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+</span></code></pre></div></div>
+
+<p>I’m gonna make some changes to the samba configuration file, so I want to make a backup in case I break something.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:/media/pi $</span><span class="w"> </span><span class="nb">sudo cp</span> /etc/samba/smb.conf /etc/samba/smb.conf.old
+<span class="gp">pi@raspberrypi:/media/pi $</span><span class="w"> </span><span class="nb">sudo </span>nano /etc/samba/smb.conf
+</code></pre></div></div>
+
+<p>Here’s what I added to the bottom of the configuration file.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">[1TB_Toshiba]
+comment = Backup Folder
+path = /media/USBHDD1/shares
+valid users = @users
+force group = users
+create mask = 0660
+directory mask = 0771
+read only = no
+</span></code></pre></div></div>
+
+<p>The new configuration won’t be up until I restart.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:/media/pi $</span><span class="w"> </span><span class="nb">sudo</span> /etc/init.d/samba restart
+<span class="go">[ ok ] Restarting nmbd (via systemctl): nmbd.service.
+[ ok ] Restarting smbd (via systemctl): smbd.service.
+</span></code></pre></div></div>
+
+<p>The drive is a network share now!</p>
+
+<p><img src="/assets/2019-04-05-File_Server_Raspberry/drive-available-BUT-PASSWORD.PNG" alt="drive-available-BUT-PASSWORD" /></p>
+
+<p>Here’s how I added myself as a user with a password:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:/media/pi $</span><span class="w"> </span><span class="nb">sudo </span>useradd dave <span class="nt">-m</span> <span class="nt">-G</span> <span class="nb">users</span>
+<span class="gp">pi@raspberrypi:/media/pi $</span><span class="w"> </span><span class="nb">sudo </span>passwd dave
+<span class="go">Enter new UNIX password:
+Retype new UNIX password:
+passwd: password updated successfully
+</span></code></pre></div></div>
+
+<p>This adds me as a legit user in the samba system:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:/media/pi $</span><span class="w"> </span><span class="nb">sudo </span>smbpasswd <span class="nt">-a</span> dave
+<span class="go">New SMB password:
+Retype new SMB password:
+Added user dave.
+</span></code></pre></div></div>
+
+<p>I restarted the system because it wouldn’t let me logon after I ran the previous command.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:/media/pi $</span><span class="w"> </span><span class="nb">sudo </span>reboot
+<span class="go">Connection to 192.168.1.3 closed by remote host.
+Connection to 192.168.1.3 closed.
+</span><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span>Connection to 192.168.1.3 closed by remote host.
+<span class="go">Connection to 192.168.1.3 closed.
+</span></code></pre></div></div>
+
+<p>^The file still won’t let me in … weird. I’m gonna restart my computer. I have restarted my computer and rebooted my Raspberry Pi again and I still don’t have access to my shared files … why?</p>
+
+<p>I blindly copied the following from the tutorial. See what I did wrong yet?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[Backup]
+comment = Backup Folder
+path = /media/USBHDD1/shares
+valid users = @users
+force group = users
+create mask = 0660
+directory mask = 0771
+read only = no
+</code></pre></div></div>
+
+<p>^My path is wrong … I just copied the path from the article.</p>
+
+<p>Here’s how I updated it to path = /media/1TB_Toshiba:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo mkdir</span> /media/1TB_Toshiba
+<span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>mount <span class="nt">-t</span> auto /dev/sda1 /media/1TB_Toshiba/
+<span class="go">Mount is denied because the NTFS volume is already exclusively opened.
+The volume may be already mounted, or another software may use it which
+could be identified for example by the help of the 'fuser' command.
+</span><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>fuser /dev/sda1
+<span class="go">/dev/sda1:             871
+</span><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo kill </span>871
+<span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>mount <span class="nt">-t</span> auto /dev/sda1 /media/1TB_Toshiba
+<span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo</span> /etc/init.d/samba restart
+<span class="go">[ ok ] Restarting nmbd (via systemctl): nmbd.service.
+[ ok ] Restarting smbd (via systemctl): smbd.service.
+</span><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>nano /etc/samba/smb.conf
+<span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo</span> /etc/init.d/samba restart
+<span class="go">[ ok ] Restarting nmbd (via systemctl): nmbd.service.
+[ ok ] Restarting smbd (via systemctl): smbd.service.
+</span></code></pre></div></div>
+
+<p>… annnnddddd that fixed it! This is why it’s important to read through everything … don’t commit to an action unless you know <em>exactly</em> what will happen! Here are my shared files!</p>
+
+<p><img src="/assets/2019-04-05-File_Server_Raspberry/virtual-os-on-share.PNG" alt="virtual-os-on-share" /></p>
+
+  </div><a class="u-url" href="/networking/2019/04/04/SAMBA-SMB-NAS.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

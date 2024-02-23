@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Using NAT in a Pi-based WAP | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Using NAT in a Pi-based WAP" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I have been using a Netgear N600 router with Dual Band Wi-Fi (2.4 &amp; 5 GHz) for a little over a year now and I don’t have any problems with it :) However, I’ve been reading about Wi-Fi network interference lately … this has inspired me to start playing with Wi-Fi interference with my home lab. I recently purchased a Raspberry Pi 3B+ that has Dual Band Wi-Fi, so I now have the perfect opportunity to start playing :)" />
+<meta property="og:description" content="I have been using a Netgear N600 router with Dual Band Wi-Fi (2.4 &amp; 5 GHz) for a little over a year now and I don’t have any problems with it :) However, I’ve been reading about Wi-Fi network interference lately … this has inspired me to start playing with Wi-Fi interference with my home lab. I recently purchased a Raspberry Pi 3B+ that has Dual Band Wi-Fi, so I now have the perfect opportunity to start playing :)" />
+<link rel="canonical" href="http://localhost:4000/networking/linux/2019/04/04/Raspberry-NAT-WAP.html" />
+<meta property="og:url" content="http://localhost:4000/networking/linux/2019/04/04/Raspberry-NAT-WAP.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-04T12:00:40-07:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Using NAT in a Pi-based WAP" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-04-04T12:00:40-07:00","datePublished":"2019-04-04T12:00:40-07:00","description":"I have been using a Netgear N600 router with Dual Band Wi-Fi (2.4 &amp; 5 GHz) for a little over a year now and I don’t have any problems with it :) However, I’ve been reading about Wi-Fi network interference lately … this has inspired me to start playing with Wi-Fi interference with my home lab. I recently purchased a Raspberry Pi 3B+ that has Dual Band Wi-Fi, so I now have the perfect opportunity to start playing :)","headline":"Using NAT in a Pi-based WAP","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/networking/linux/2019/04/04/Raspberry-NAT-WAP.html"},"url":"http://localhost:4000/networking/linux/2019/04/04/Raspberry-NAT-WAP.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Using NAT in a Pi-based WAP</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-04-04T12:00:40-07:00" itemprop="datePublished">Apr 4, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I have been using a Netgear N600 router with Dual Band Wi-Fi (2.4 &amp; 5 GHz) for a little over a year now and I don’t have any problems with it :) However, I’ve been reading about Wi-Fi network interference lately … this has inspired me to start playing with Wi-Fi interference with my home lab. I recently purchased a Raspberry Pi 3B+ that has Dual Band Wi-Fi, so I now have the perfect opportunity to start playing :)</p>
+
+<p>But, before I can start testing out Wi-Fi interference, I’ll need to set up a Wireless Access Point for my Pi. This is actually a pretty involved process, so I’ll be working from <a href="https://www.raspberrypi.org/documentation/configuration/wireless/access-point.md">this tutorial.</a> Before I continue, I’d like to explain some concepts that will be used throughout this project.</p>
+
+<p>Iptables are a set of rules used by a Linux firewall to determine how packets (data) get treated. Network Address Translation (NAT) allows a group of private IP addresses to be treated as a single IP address when communicating with the internet; I’ll eventually talk about the limited IP addresses for IPv4 and why it’s important … you could Google that if you don’t already know about it. Finally, in the context of NAT, masquerade is an algorithm used to convert between the private IP address space and the publicly assigned IP address.</p>
+
+<p>Coming back to the tutorial, the first thing I’ll be doing is making sure my Raspbian OS is up-to-date.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo apt-get update
+sudo apt-get upgrade
+</span></code></pre></div></div>
+
+<p>Next up, I’ll be grabbing the software packages that are required for creating a WAP with a Raspberry Pi: dnsmasq &amp; hostapd. Dnsmasq is a low-resource DNS and DHCP server. Hostapd allows regular network interface cards to be treated as access points.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo apt-get install dnsmasq hostapd
+</span></code></pre></div></div>
+
+<p>^Those software packages haven’t been configured, so I don’t want them to be running yet. Also, I’m rebooting just to keep things fresh.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo systemctl stop dnsmasq
+sudo systemctl stop hostapd
+sudo reboot
+</span></code></pre></div></div>
+
+<p>IP addresses change on reboot <em>and</em> the wireless access point needs to be at the same IP address (so devices can stay on it), so I need to give my Pi a static IP address. I’ll be doing that by making a dhcpcd configuration file. Nano is a common text editor, BTW.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>This opens <span class="k">*</span>or<span class="k">*</span> creates the configuration file
+<span class="go">sudo nano /etc/dhcpcd.conf
+</span><span class="gp">#</span><span class="w"> </span>this is the config info that I added to the end of the file
+<span class="go">interface wlan0
+    static ip_address=192.168.4.1/24
+    nohook wpa_supplicant
+</span></code></pre></div></div>
+
+<p>The changes won’t take effect until the service is restarted, so …</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo service dhcpcd restart
+</span></code></pre></div></div>
+
+<p>I’m about to make changes to the dnsmas configuration file, so I’ll be saving an original copy just in case ;)</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig  
+sudo nano /etc/dnsmasq.conf
+</span></code></pre></div></div>
+
+<p>Here’s the new code for the dnsmasq config file:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">interface=wlan0      #</span><span class="w"> </span>Use the require wireless interface - usually wlan0
+<span class="go">  dhcp-range=192.168.4.2,192.168.4.20,255.255.255.0,24h
+</span></code></pre></div></div>
+
+<p>^It’s now set up to provide IP addresses between 192.168.4.2 and 192.168.4.20 AND the IP addresses will only be good for 24 hours.</p>
+
+<p>But how do I set up the Wi-Fi name, password &amp; GHz info?!? With another configuration file! Here I’m adding more specifications for the hostapd configuration file. Please don’t use my password to hax my network, lol ;)</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">interface=wlan0
+driver=nl80211
+ssid=NameOfNetwork
+hw_mode=g
+channel=7
+wmm_enabled=0
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=AardvarkBadgerHedgehog
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+</span></code></pre></div></div>
+
+<p>The current DAEMON_CONF is set to a blank string, so the Pi doesn’t know where the hostapd file is. This new addition tells my Raspberry where the hostapd configuration file is:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">DAEMON_CONF="/etc/hostapd/hostapd.conf"
+</span></code></pre></div></div>
+
+<p><strong>This is where the tutorial fails me!</strong> I get an error about not being able to start the hostapd service because it is “masked.”</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>systemctl start hostapd
+<span class="go">Failed to start hostapd.service: Unit hostapd.service is masked.
+</span><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>systemctl start dnsmasq
+</code></pre></div></div>
+
+<p>Thankfully, I know how to Google around ;) Another user experienced the same problem, <a href="https://github.com/raspberrypi/documentation/issues/1018">explaining it here.</a> I ran their commands and that set things right :)</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo systemctl unmask hostapd
+sudo systemctl enable hostapd
+sudo systemctl start hostapd
+</span></code></pre></div></div>
+
+<p>Now I add the masquerade algorithm for outbound traffic on eth0 (eth0 is ethernet 0 in UNIX-based systems).</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo iptables -t nat -A  POSTROUTING -o eth0 -j MASQUERADE
+</span></code></pre></div></div>
+
+<p>This is me saving the iptables rule.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">sudo sh -c "iptables-save &gt;</span><span class="w"> </span>/etc/iptables.ipv4.nat<span class="s2">"
+</span></code></pre></div></div>
+
+<p>Now I edit the /etc/rc.local file so that the previously added rules run after a reboot.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>nano /etc/rc.local
+<span class="gp">#</span><span class="w"> </span>add this line above the <span class="s2">"exit 0"</span>
+<span class="go">iptables-restore &lt; /etc/iptables.ipv4.nat
+</span><span class="gp">#</span><span class="w"> </span>reboot the system
+<span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<p>I should now be seeing a net Wi-Fi access point … YES! I did a search on my phone and, there it is!!!</p>
+
+<p><img src="/assets/2019-04-04-NAT_Raspberry-WAP/New_WIFI_Name.png" alt="New_WiFi_Name" /></p>
+
+<p>^BUT, that network doesn’t have access to the internet because I haven’t yet <em>bridged</em> the Raspberry Pi’s ethernet connection to it’s new Wi-Fi access point. I’ll need the bridge-utils to make that happen …</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo apt-get install bridge-utils
+</span></code></pre></div></div>
+
+<p>I’m gonna turn off the host access point until it’s properly configured.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo systemctl stop hostapd
+</span></code></pre></div></div>
+
+<p>I then added these two lines to the end of the /etc/dhcpdd config file, <em>BUT</em> the lines were added above the previously added interface lines.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>I used <span class="s2">"sudo nano /etc/dhcpcd.conf"</span> to open the file
+<span class="gp">#</span><span class="w"> </span><span class="k">then </span>I added these lines
+<span class="go">denyinterfaces wlan0
+denyinterfaces eth0
+</span></code></pre></div></div>
+
+<p>Here’s  how I added a bridge named br0:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo brctl addbr br0
+</span></code></pre></div></div>
+
+<p>This line connects the eth0 and the br0 network ports:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo brctl addif br0 eth0
+</span></code></pre></div></div>
+
+<p>Next up, I needed to make some edits to make the interfaces work with bridging. I opened the interfaces file with:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo nano /etc/network/interfaces
+</span></code></pre></div></div>
+
+<p>These are the changes that I made to the end of that file:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">#</span><span class="w"> </span>Bridge setup
+<span class="go">auto br0
+iface br0 inet manual
+bridge_ports eth0 wlan0
+</span></code></pre></div></div>
+
+<p>Finally, I configured the hostapd configuration file again to include this new br0 connection … this means that devices connecting to the WAP will have access to the bridged ethernet internet connection! Here’s how I opened the configuration file:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">sudo </span>nano /etc/hostapd/hostapd.conf
+</code></pre></div></div>
+
+<p>These are the lines that I edited … note that I have changed the SSID to be “DavidWiFiTest” … I wanna try out underscores, but I don’t know if those are allowed … it’s 1:37 AM, so that can wait, lol.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">interface=wlan0
+bridge=br0
+</span><span class="gp">#</span><span class="nv">driver</span><span class="o">=</span>nl80211
+<span class="go">ssid=DavidWiFiTest
+hw_mode=g
+channel=7
+wmm_enabled=0
+macaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=AardvarkBadgerHedgehog
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+</span></code></pre></div></div>
+
+<p>^All of the edits are now in place, so it’s time for a final reboot to run the relevant changes.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">sudo reboot
+</span></code></pre></div></div>
+
+<p>annnnnnnnndddddd …. YESSSSSSS! My new Wi-Fi access point is available AND, this time, it now gives attached devices access to it’s internet connection!!!</p>
+
+<p><img src="/assets/2019-04-04-NAT_Raspberry-WAP/Dave_WiFi.png" alt="" /></p>
+
+  </div><a class="u-url" href="/networking/linux/2019/04/04/Raspberry-NAT-WAP.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

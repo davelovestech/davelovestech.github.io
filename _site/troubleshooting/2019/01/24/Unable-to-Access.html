@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Unable to Access Shared Drive | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Unable to Access Shared Drive" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Clicking the Terabyte HDD icon on the launcher makes the icon blink, like it was going to open, but then it doesn’t open. Attempting to open the drive from a file explorer yields this error message:" />
+<meta property="og:description" content="Clicking the Terabyte HDD icon on the launcher makes the icon blink, like it was going to open, but then it doesn’t open. Attempting to open the drive from a file explorer yields this error message:" />
+<link rel="canonical" href="http://localhost:4000/troubleshooting/2019/01/24/Unable-to-Access.html" />
+<meta property="og:url" content="http://localhost:4000/troubleshooting/2019/01/24/Unable-to-Access.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-01-24T12:42:40-08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Unable to Access Shared Drive" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-01-24T12:42:40-08:00","datePublished":"2019-01-24T12:42:40-08:00","description":"Clicking the Terabyte HDD icon on the launcher makes the icon blink, like it was going to open, but then it doesn’t open. Attempting to open the drive from a file explorer yields this error message:","headline":"Unable to Access Shared Drive","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/troubleshooting/2019/01/24/Unable-to-Access.html"},"url":"http://localhost:4000/troubleshooting/2019/01/24/Unable-to-Access.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Unable to Access Shared Drive</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-01-24T12:42:40-08:00" itemprop="datePublished">Jan 24, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Clicking the Terabyte HDD icon on the launcher makes the icon blink, like it was going to open, but then it doesn’t open. Attempting to open the drive from a file explorer yields this error message:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Unable to access “Terabyte”
+Error mounting /dev/sdc1 at /media/david/Terabyte1: Command-line `mount -t "ntfs" -o
+"uhelper=udisks2,nodev,nosuid,uid=1000,gid=1000" "/dev/sdc1" "/media/david/Terabyte1"' exited
+with non-zero exit status 14: The disk contains an unclean file system (0, 0).
+Metadata kept in Windows cache, refused to mount.
+Failed to mount '/dev/sdc1': Operation not permitted
+The NTFS partition is in an unsafe state. Please resume and shutdown
+Windows fully (no hibernation or fast restarting), or mount the volume
+read-only with the 'ro' mount option.
+</span></code></pre></div></div>
+<p><a href="https://askubuntu.com/questions/145902/unable-to-mount-windows-ntfs-filesystem-due-to-hibernation">this Stack Exchange post</a> says that this error can happen if a Windows partition was hiberated before Linux tried to open it. I don’t think my Windows parition was hibernated the last time that it was used … I’m pretty sure I turned it off normally. <strong>However</strong>, I just recovered from a Linux Emergency Mode situation, so perhaps the issues are related?</p>
+
+<p>I see that it’s suggested for me to boot up the Windows partition and then turn it off normally before going back into Linux. But, I am wondering if it’s possible to fix this situation while logged in to Linux.</p>
+
+<p>coyping this “mount -t ntfs-3g -o ro /dev/sda3 /media/windows” for my needs</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[16:20] david@Ryzen david/ &gt;</span><span class="w">  </span><span class="nb">sudo </span>mount <span class="nt">-t</span> ntfs-3g <span class="nt">-o</span> ro /dev/sdc1 /media/david/Terabyte
+</code></pre></div></div>
+
+<p>That worked to get my filesystem back up in read only mode, but I want to be able to write too! I’m trying to get macOS Mojave to work in VirtualBox and the virtual hard drive is stored on the Terabyte drive that is read only. I can’t boot the Mojave in VirtualBox until I get writes allowable on the hard drive.</p>
+
+<p><img src="/assets/Shared_Drive/virtualbox_failed.png" alt="VirtualBox_Failed" /></p>
+
+<p>I could do a bit more reading on the “ntfs-3g” command with its manual:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">man ntfs-3g
+</span></code></pre></div></div>
+
+<p>It looks like I could use remove-hiberfile to delete the windows hibernation file without turning off my Ubuntu system. I don’t have any important information on the Windows partition, so I’m fine with this.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">remove_hiberfile
+       Unlike in case of read-only mount, the read-write mount is denied if the NTFS volume is
+       hibernated. One needs either to resume Windows and  shutdown  it  properly,
+       or use this option which will remove the Windows hibernation file. Please note, this
+       means that the saved Windows session will be completely lost. Use
+       this option under your own responsibility.
+</span></code></pre></div></div>
+
+<p>I attempted to do taht with these terminal entries, but I couldn’t get it to work. I believe that my command entry is correct because it matches the syntax of what I’ve read about online.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[16:35] david@Ryzen david/ &gt;</span><span class="w">  </span><span class="nb">sudo </span>umount /dev/sdc1
+<span class="gp">[16:35] david@Ryzen david/ &gt;</span><span class="w">  </span><span class="nb">sudo </span>mount <span class="nt">-t</span> ntfs-3g <span class="nt">-o</span> remove_hiberfile /dev/sdc1 /media/david/
+<span class="go">Terabyte
+The disk contains an unclean file system (0, 0).
+Metadata kept in Windows cache, refused to mount.
+Failed to mount '/dev/sdc1': Operation not permitted
+The NTFS partition is in an unsafe state. Please resume and shutdown
+Windows fully (no hibernation or fast restarting), or mount the volume
+read-only with the 'ro' mount option.
+</span></code></pre></div></div>
+
+<p>I guess I will try to turn off the computer, boot into Windows, shut that down and then boot back into Linux. I tried that and it didn’t work … this is weird. <a href="https://askubuntu.com/questions/462381/cant-mount-ntfs-drive-the-disk-contains-an-unclean-file-system">Here’s a StackExchange post</a> about how to use “ntfsfix” to address this kind of situation. I adjusted the command for my situation and it worked!</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[19:00] david@Ryzen ~/ &gt;</span><span class="w">  </span><span class="nb">sudo </span>ntfsfix /dev/sdc1
+<span class="go">Mounting volume... The disk contains an unclean file system (0, 0).
+Metadata kept in Windows cache, refused to mount.
+FAILED
+Attempting to correct errors...
+</span><span class="gp">Processing $</span>MFT and <span class="nv">$MFTMirr</span>...
+<span class="gp">Reading $</span>MFT... OK
+<span class="gp">Reading $</span>MFTMirr... OK
+<span class="gp">Comparing $</span>MFTMirr to <span class="nv">$MFT</span>... OK
+<span class="gp">Processing of $</span>MFT and <span class="nv">$MFTMirr</span> completed successfully.
+<span class="go">Setting required flags on partition... OK
+</span><span class="gp">Going to empty the journal ($</span>LogFile<span class="o">)</span>... OK
+<span class="go">Checking the alternate boot sector... OK
+NTFS volume version is 3.1.
+NTFS partition /dev/sdc1 was processed successfully.
+</span></code></pre></div></div>
+
+<p>It was mounting to “/media/david/Terabyte1” instead of “/media/david/Terabyte”. I unmounted and then remounted with my desired location like so:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">[19:05] david@Ryzen ~/ &gt;</span><span class="w">  </span><span class="nb">sudo </span>umount /dev/sdc1
+<span class="gp">[19:05] david@Ryzen ~/ &gt;</span><span class="w">  </span><span class="nb">sudo </span>mount <span class="nt">-t</span> ntfs-3g <span class="nt">-o</span> rw /dev/sdc1 /media/david/Terabyte
+</code></pre></div></div>
+
+<p>This got it working and at the right location!</p>
+
+  </div><a class="u-url" href="/troubleshooting/2019/01/24/Unable-to-Access.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

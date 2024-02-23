@@ -1,0 +1,4 @@
+* Create a Bootable USB Flash Drive
+https://learn.microsoft.com/en-us/windows-server-essentials/install/create-a-bootable-usb-flash-drive
+OR Rufus
+* 

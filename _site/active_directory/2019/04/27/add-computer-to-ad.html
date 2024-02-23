@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Adding a Computer to a Windows AD Domain | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Adding a Computer to a Windows AD Domain" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I added a user to the Active Directory in the previous article, so now it’s time to add a computer. This’ll require another operating system! I downloaded an Evaluation of Windows 10 Enterprise here. Here’s one of the earlier images from getting the VirtualBox instance running:" />
+<meta property="og:description" content="I added a user to the Active Directory in the previous article, so now it’s time to add a computer. This’ll require another operating system! I downloaded an Evaluation of Windows 10 Enterprise here. Here’s one of the earlier images from getting the VirtualBox instance running:" />
+<link rel="canonical" href="http://localhost:4000/active_directory/2019/04/27/add-computer-to-ad.html" />
+<meta property="og:url" content="http://localhost:4000/active_directory/2019/04/27/add-computer-to-ad.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-27T04:00:40-07:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Adding a Computer to a Windows AD Domain" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-04-27T04:00:40-07:00","datePublished":"2019-04-27T04:00:40-07:00","description":"I added a user to the Active Directory in the previous article, so now it’s time to add a computer. This’ll require another operating system! I downloaded an Evaluation of Windows 10 Enterprise here. Here’s one of the earlier images from getting the VirtualBox instance running:","headline":"Adding a Computer to a Windows AD Domain","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/active_directory/2019/04/27/add-computer-to-ad.html"},"url":"http://localhost:4000/active_directory/2019/04/27/add-computer-to-ad.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Adding a Computer to a Windows AD Domain</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-04-27T04:00:40-07:00" itemprop="datePublished">Apr 27, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I added a user to the Active Directory in the previous article, so now it’s time to add a computer. This’ll require another operating system! I downloaded an <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-10-enterprise">Evaluation of Windows 10 Enterprise here.</a> Here’s one of the earlier images from getting the VirtualBox instance running:</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/win-10-enterprise-system-install.PNG" alt="win-10-enterprise-system-install" /></p>
+
+<p>Once I got the new Windows 10 Enterprise instance up and running I added it to the example.com domain that the Windows Server 2012 AD instance is running:</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/member-of-exampleDOTcom-domain.PNG" alt="member-of-exampleDOTcom-domain" /></p>
+
+<p>I used the jared administrator instance as the credentials for joining the example.com domain.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/login-computer-name-jared.PNG" alt="login-computer-name-jared" /></p>
+
+<p>Changing a domain requires a restart, so I rebooted the system before making any other changes. Remember how this was in the Windows 10 Enterprise system? Well, now it’s time to switch over into the Windows Server 2012.</p>
+
+<p>I went into the Active Directory Administrative Center &gt; Lab &gt; Computers and found my Windows 10 Enterprise OS as a new computer. You can tell it’s the same OS cause it has the matching name of “lab-win-10-01” from above:</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/computer-nowIN-computers.PNG" alt="computer-nowIN-computers" /></p>
+
+  </div><a class="u-url" href="/active_directory/2019/04/27/add-computer-to-ad.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

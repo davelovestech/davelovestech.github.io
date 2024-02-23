@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Opening Firewall Ports for Google Voice | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Opening Firewall Ports for Google Voice" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I set up a new firewall on the edge of my network on previous posts. So far I have only added rules to allow outgoing Ping, HTTP and HTTPS traffic. I just tried using Google Voice and it didn’t work. So now is the time to create a new firewall rule!" />
+<meta property="og:description" content="I set up a new firewall on the edge of my network on previous posts. So far I have only added rules to allow outgoing Ping, HTTP and HTTPS traffic. I just tried using Google Voice and it didn’t work. So now is the time to create a new firewall rule!" />
+<link rel="canonical" href="http://localhost:4000/firewall/2024/02/12/firewall-ports-google-voice.html" />
+<meta property="og:url" content="http://localhost:4000/firewall/2024/02/12/firewall-ports-google-voice.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-02-12T17:22:00-08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Opening Firewall Ports for Google Voice" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2024-02-12T17:22:00-08:00","datePublished":"2024-02-12T17:22:00-08:00","description":"I set up a new firewall on the edge of my network on previous posts. So far I have only added rules to allow outgoing Ping, HTTP and HTTPS traffic. I just tried using Google Voice and it didn’t work. So now is the time to create a new firewall rule!","headline":"Opening Firewall Ports for Google Voice","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/firewall/2024/02/12/firewall-ports-google-voice.html"},"url":"http://localhost:4000/firewall/2024/02/12/firewall-ports-google-voice.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Opening Firewall Ports for Google Voice</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-02-12T17:22:00-08:00" itemprop="datePublished">Feb 12, 2024
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I set up a new firewall on the edge of my network on previous posts. So far I have only added rules to allow outgoing Ping, HTTP and HTTPS traffic. I just tried using Google Voice and it didn’t work. So now is the time to create a new firewall rule!</p>
+
+<p>The documentation for Google Voice<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> indicates that I need to open the following ports:</p>
+
+<ul>
+  <li>Outbound UDP ports range: 19302–19309</li>
+  <li>Outbound UDP ports range: 26500–26501</li>
+  <li>Outbound TCP port 443</li>
+</ul>
+
+<p>I have already opened up TCP port 443 for outgoing HTTPS traffic on a previous post, so I only need to focus on the two outgoing UDP rules. I’m going to stick with the Sophos default of ports 1 - 65,535 being potential options for the source port. There are two separate port ranges that are required, so I’ll need to create two different services entries. Here’s the entry for the first range:</p>
+
+<p><img src="/assets/google-voice-ports/google-voice-udp-ports.PNG" alt="Cloudflare-Proxy" /></p>
+
+<p>I added both of those ranges to a single rule for Google Voice.</p>
+
+<p><img src="/assets/google-voice-ports/google-voice-both-udp-rules.PNG" alt="Cloudflare-Proxy" /></p>
+
+<p>Once I enabled that rule, I was able to start using Google Voice for calls again! So, to recap, I am now up to having four total firewall rules. Note: the rule IDs are out of order because I recreated the initial firewall rules for the screenshot.</p>
+
+<p><img src="/assets/google-voice-ports/firewall-rule-google-voice.PNG" alt="Cloudflare-Proxy" /></p>
+
+<h1 id="references-">References <a name="references"></a></h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://support.google.com/a/answer/9206518?hl=en#zippy=%2Cvoice-architecture%2Coutbound-ports-need-to-allow-voice-traffic%2Cbandwidth-requirements-per-site%2Callow-list-uris">Voice connectivity requirements</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+  </div><a class="u-url" href="/firewall/2024/02/12/firewall-ports-google-voice.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

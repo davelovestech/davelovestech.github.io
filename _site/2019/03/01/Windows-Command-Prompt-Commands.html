@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Windows Command Prompt Commands | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Windows Command Prompt Commands" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I was lucky enough to have access to a Windows 95 computer back when I was a kid. I remember loving to watch the Disk Defragmenter graphical user interface way back then! I currently run a dual-boot desktop computer system with Windows 10 and Ubuntu 16.04. I’m currently writing this blog post in the Linux boot system. However, I have a Windows 10 VirtualBox instance that I will be running commands within." />
+<meta property="og:description" content="I was lucky enough to have access to a Windows 95 computer back when I was a kid. I remember loving to watch the Disk Defragmenter graphical user interface way back then! I currently run a dual-boot desktop computer system with Windows 10 and Ubuntu 16.04. I’m currently writing this blog post in the Linux boot system. However, I have a Windows 10 VirtualBox instance that I will be running commands within." />
+<link rel="canonical" href="http://localhost:4000/2019/03/01/Windows-Command-Prompt-Commands.html" />
+<meta property="og:url" content="http://localhost:4000/2019/03/01/Windows-Command-Prompt-Commands.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-01T21:20:40-08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Windows Command Prompt Commands" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-03-01T21:20:40-08:00","datePublished":"2019-03-01T21:20:40-08:00","description":"I was lucky enough to have access to a Windows 95 computer back when I was a kid. I remember loving to watch the Disk Defragmenter graphical user interface way back then! I currently run a dual-boot desktop computer system with Windows 10 and Ubuntu 16.04. I’m currently writing this blog post in the Linux boot system. However, I have a Windows 10 VirtualBox instance that I will be running commands within.","headline":"Windows Command Prompt Commands","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2019/03/01/Windows-Command-Prompt-Commands.html"},"url":"http://localhost:4000/2019/03/01/Windows-Command-Prompt-Commands.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Windows Command Prompt Commands</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-03-01T21:20:40-08:00" itemprop="datePublished">Mar 1, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I was lucky enough to have access to a Windows 95 computer back when I was a kid. I remember loving to watch the Disk Defragmenter graphical user interface way back then! I currently run a dual-boot desktop computer system with Windows 10 and Ubuntu 16.04. I’m currently writing this blog post in the Linux boot system. However, I have a Windows 10 VirtualBox instance that I will be running commands within.</p>
+
+<h1 id="what-version-of-windows-is-this">What Version of Windows is This?</h1>
+<p>The systeminfo command will yield a long list of information about the computer system. It is possible to specifically filter to OS Name and Version with the findstr.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser&gt;</span>systeminfo | findstr /B /C:<span class="s2">"OS Name"</span> /C:<span class="s2">"OS Version"</span>
+<span class="go">OS Name:			Microsoft Windows 7 Enterprise
+OS Version:			6.1.7601 Service Pack 1 Buld 7601
+</span></code></pre></div></div>
+
+<h1 id="making-directories-and-moving-between-them">Making Directories and Moving Between Them</h1>
+<p>The default in Windows command prompt is to print the working directory on each terminal line. It looks like this:</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser&gt;</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="changing-current-directory">Changing Current Directory</h3>
+<p>I want to print the contents of a directory, but the IEUser directory is HUGE! I will use the change directory command “cd” to move one directory up.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser&gt;</span><span class="nb">cd</span> ../
+<span class="gp">C:\Users&gt;</span><span class="w">
+</span></code></pre></div></div>
+<h3 id="listing-directory-contents">Listing Directory Contents</h3>
+<p>Here I used the directory command “dir” to list the contents of the current directory.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users
+
+</span><span class="gp">04/25/2018  07:59 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">04/25/2018  07:59 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="gp">03/02/2019  02:25 PM    &lt;DIR&gt;</span><span class="w">          </span>IEUser
+<span class="gp">04/25/2018  07:48 AM    &lt;DIR&gt;</span><span class="w">          </span>Public
+<span class="gp">03/02/2019  02:22 PM    &lt;DIR&gt;</span><span class="w">          </span>sshd_server
+<span class="go">               0 File(s)              0 bytes
+               5 Dir(s)  28,680,577,024 bytes free
+</span></code></pre></div></div>
+
+<h3 id="make-a-directory">Make a Directory</h3>
+<p>Here I made a directory called TEST, cd into, make a directory called TEST_DIRECTORY, and then I use DIR to list the directories again. Notice that there is now a new directory!</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser&gt;</span>md TEST
+<span class="go">
+</span><span class="gp">C:\Users\IEUser&gt;</span><span class="nb">cd </span>TEST
+<span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>DIR
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  12:45 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  12:45 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="go">               0 File(s)              0 bytes
+               2 Dir(s)  24,924,737,536 bytes free
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>md TEST_DIRECTORY
+<span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>DIR
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  12:45 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  12:45 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="gp">03/06/2019  12:45 AM    &lt;DIR&gt;</span><span class="w">          </span>TEST_DIRECTORY
+<span class="go">               0 File(s)              0 bytes
+               3 Dir(s)  24,916,852,736 bytes free
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="w">
+</span></code></pre></div></div>
+<h3 id="delete-a-directory">Delete a Directory</h3>
+<p>The rd command is used to remove a directory. Here I used dir to show the presence of BAD_DIRECTORY and then I use rd to get rid of it. DIR is used to show that the directory is actually gone.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\TEST&gt;</span>md BAD_DIRECTORY
+<span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  01:10 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  01:10 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="gp">03/06/2019  01:10 AM    &lt;DIR&gt;</span><span class="w">          </span>BAD_DIRECTORY
+<span class="go">               0 File(s)              0 bytes
+               3 Dir(s)  24,472,600,576 bytes free
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>rd /s /q BAD_DIRECTORY
+<span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  01:11 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  01:11 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="go">               0 File(s)              0 bytes
+               2 Dir(s)  24,472,600,576 bytes free
+</span></code></pre></div></div>
+
+<h1 id="creating-viewing-moving--deleting-files">Creating, Viewing, Moving, &amp; Deleting Files</h1>
+<h3 id="creating--viewing-file-contents">Creating &amp; Viewing File Contents</h3>
+<p>In this section I first use dir to show that there are no initial files. I then use echo and &gt; to insert the text “this line is going into a file” into a file called THIS_IS_A_FILE.TXT.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  12:54 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  12:54 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="go">               0 File(s)              0 bytes
+               2 Dir(s)  24,473,047,040 bytes free
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">echo </span>this line is going into a file <span class="o">&gt;</span> THIS_IS_A_FILE.TXT
+<span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  12:55 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  12:55 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="go">03/06/2019  12:55 AM                33 THIS_IS_A_FILE.TXT
+               1 File(s)             33 bytes
+               2 Dir(s)  24,472,911,872 bytes free
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">type </span>THIS_IS_A_FILE.TXT
+<span class="go">this line is going into a file
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="w">
+</span></code></pre></div></div>
+<h3 id="viewing-the-text-of-a-file">Viewing the Text of a File</h3>
+<p>Here I use the type command to view the contents of a file.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">echo </span>these are words <span class="k">in </span>a file <span class="o">&gt;</span> FILENAME.txt
+<span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">type </span>FILENAME.txt
+<span class="go">these are words in a file
+</span></code></pre></div></div>
+<h3 id="deleting-a-file">Deleting a File</h3>
+<p>Here I use dir to show that THIS_IS_A_FILE.TXT is initially present. I then use the delete command, del, to remove the file. I then use dir one more time to show that the file is gone.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  12:55 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  12:55 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="go">03/06/2019  12:55 AM                33 THIS_IS_A_FILE.TXT
+               1 File(s)             33 bytes
+               2 Dir(s)  24,472,289,280 bytes free
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>del THIS_IS_A_FILE.TXT
+<span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  12:58 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  12:58 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="go">               0 File(s)              0 bytes
+               2 Dir(s)  24,472,289,280 bytes free
+</span></code></pre></div></div>
+<h3 id="moving-a-file-in-a-directory">Moving a File in a Directory</h3>
+<p>Here I created a file called FILENAME.txt with echo and &gt;. Then I used move to place that file into DIRECTORY_ONE. I finally cd into DIRECTORY_ONE and use DIR to show that the file has indeed moved.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  01:02 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  01:02 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="gp">03/06/2019  01:02 AM    &lt;DIR&gt;</span><span class="w">          </span>DIRECTORY_ONE
+<span class="gp">03/06/2019  01:02 AM    &lt;DIR&gt;</span><span class="w">          </span>DIRECTORY_TWO
+<span class="go">03/06/2019  01:02 AM                29 FILENAME.txt
+               1 File(s)             29 bytes
+               4 Dir(s)  24,475,189,248 bytes free
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>move FILENAME.txt c:<span class="se">\U</span>sers<span class="se">\I</span>EUser<span class="se">\T</span>EST<span class="se">\D</span>IRECTORY_ONE
+<span class="go">        1 file(s) moved.
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST
+
+</span><span class="gp">03/06/2019  01:03 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  01:03 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="gp">03/06/2019  01:03 AM    &lt;DIR&gt;</span><span class="w">          </span>DIRECTORY_ONE
+<span class="gp">03/06/2019  01:02 AM    &lt;DIR&gt;</span><span class="w">          </span>DIRECTORY_TWO
+<span class="go">               0 File(s)              0 bytes
+               4 Dir(s)  24,475,189,248 bytes free
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="nb">cd </span>DIRECTORY_ONE
+<span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST\DIRECTORY_ONE&gt;</span><span class="nb">dir</span>
+<span class="go"> Volume in drive C has no label.
+ Volume Serial Number is 3A97-874F
+
+ Directory of C:\Users\IEUser\TEST\DIRECTORY_ONE
+
+</span><span class="gp">03/06/2019  01:03 AM    &lt;DIR&gt;</span><span class="w">          </span><span class="nb">.</span>
+<span class="gp">03/06/2019  01:03 AM    &lt;DIR&gt;</span><span class="w">          </span>..
+<span class="go">03/06/2019  01:02 AM                29 FILENAME.txt
+               1 File(s)             29 bytes
+               2 Dir(s)  24,475,189,248 bytes free
+</span></code></pre></div></div>
+
+<h1 id="listing-and-ending-tasks">Listing and Ending Tasks</h1>
+<p>This is how to list current processes and kill selected processes.</p>
+<h3 id="list-current-processes">List Current Processes</h3>
+<p>tasklist is a command for getting all of the current processes. There are a lot of processes, so I used “| more” to get the output as blocks of text. I also manually cut the number of rows to a short number. I’m not yet sure how to use the Windows equivalent of the Linux HEAD command, so this will have to do.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\TEST&gt;</span>tasklist | more
+<span class="go">
+</span><span class="gp">Image Name                     PID Session Name        Session#</span><span class="w">    </span>Mem Usage
+<span class="go">========================= ======== ================ =========== ============
+System Idle Process              0 Services                   0          8 K
+System                           4 Services                   0        148 K
+Registry                        88 Services                   0      7,868 K
+smss.exe                       308 Services                   0      1,028 K
+csrss.exe                      416 Services                   0      4,208 K
+wininit.exe                    488 Services                   0      5,080 K
+</span></code></pre></div></div>
+<h3 id="kill-a-specific-process">Kill a Specific Process</h3>
+<p>Here I run an instance of notepad with “notepad. I use tasklist with the verbose argument, /v, and I pipe that into the find command with a request of “notepad”. I obtain the process identifier number (PID) of notepad. Finally, I use taskkill on the PID number to end the notepad instance. You can see from the last call of tasklist that the notepad instance with PID of 252 is now gone.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>notepad
+<span class="go">
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>tasklist /v | find <span class="s2">"notepad"</span>
+<span class="go">notepad.exe                   9176 Console                    2     17,132 K Running
+                             0:00:00 win10_commandprompt.txt - Notepad
+notepad.exe                    252 Console                    2     14,644 K Running
+                             0:00:00 Untitled - Notepad
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>taskkill /PID 252
+<span class="go">SUCCESS: Sent termination signal to the process with PID 252.
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span>tasklist /v | find <span class="s2">"notepad"</span>
+<span class="go">notepad.exe                   9176 Console                    2     17,132 K Running
+                             0:00:00 win10_commandprompt.txt - Notepad
+
+</span><span class="gp">C:\Users\IEUser\TEST&gt;</span><span class="w">
+</span></code></pre></div></div>
+<h1 id="network-commands">Network Commands</h1>
+<p>There are Windows commands for network troubleshooting.</p>
+<h3 id="testing-for-connectivity">Testing for Connectivity</h3>
+<p>You can use ping to test for network connectivity.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\TEST&gt;</span>ping 127.0.0.1
+<span class="go">
+Pinging 127.0.0.1 with 32 bytes of data:
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+Reply from 127.0.0.1: bytes=32 time&lt;1ms TTL=128
+
+Ping statistics for 127.0.0.1:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+</span></code></pre></div></div>
+<h3 id="getting-ip-configuration">Getting IP Configuration</h3>
+<p>The ipconfig command lists the Windows IP Configuration information. I am still learning about network security, so I have redacted all of my ipconfig information. I’m sure I could share more of it, but I want to be careful until I learn more.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\TEST&gt;</span>ipconfig
+<span class="go">Windows IP Configuration
+
+Ethernet adapter Ethernet:
+
+   Connection-specific DNS Suffix  . :
+   Link-local IPv6 Address . . . . . : REDACTED
+   IPv4 Address. . . . . . . . . . . : REDACTED
+   Subnet Mask . . . . . . . . . . . : REDACTED
+   Default Gateway . . . . . . . . . : REDACTED
+
+</span></code></pre></div></div>
+<h3 id="following-packet-path">Following Packet Path</h3>
+<p>The tracert command can be used to follow the path of packets across the internet. Here I use it to get to 8.8.8.8, which is one of Google’s DNS servers. I removed the entire path from the results because I am still learning about network security, so I don’t want to mistakenly share the wrong thing.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\TEST&gt;</span>tracert 8.8.8.8
+<span class="go">
+Tracing route to google-public-dns-a.google.com [8.8.8.8]
+over a maximum of 30 hops:
+
+  1    &lt;1 ms    &lt;1 ms    &lt;1 ms  REDACTED
+  2     1 ms    &lt;1 ms    &lt;1 ms  REDACTED
+  3     1 ms     1 ms     1 ms  REDACTED
+  4     2 ms     3 ms     2 ms  REDACTED
+  5     5 ms     6 ms     3 ms  REDACTED
+  6     7 ms     4 ms     4 ms  REDACTED
+  7     4 ms     3 ms     3 ms  REDACTED
+  8    20 ms    12 ms    12 ms  REDACTED
+  9    16 ms    14 ms    12 ms  REDACTED
+ 10    16 ms    19 ms    11 ms  REDACTED
+ 11    11 ms    18 ms    13 ms  google-public-dns-a.google.com [8.8.8.8]
+</span></code></pre></div></div>
+
+<h3 id="getting-website-address-info">Getting Website Address Info</h3>
+<p>The nslookup command can be used to get IP address information for a specified website. In this case I used www.professormesser.com, which is an A+ Certificaiton Study Guide Provider.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\TEST&gt;</span>nslookup www.professormesser.com
+<span class="go">Server:  UnKnown
+Address:  10.0.2.3
+
+Non-authoritative answer:
+Name:    www.professormesser.com
+Addresses:  104.20.215.41
+          104.20.214.41
+</span></code></pre></div></div>
+
+<h1 id="shutting-down-the-computer">Shutting Down the Computer</h1>
+<p>I hope you enjoyed this survey of Windows commands! Now, I’m finally going to shutdown the computer with the shutdown command and an argument of /f (force).</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\IEUser\Test&gt;</span>shutdown /f
+</code></pre></div></div>
+
+
+  </div><a class="u-url" href="/2019/03/01/Windows-Command-Prompt-Commands.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

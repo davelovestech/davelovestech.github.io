@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-02-23T13:29:57-08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dave Loves Tech</title><subtitle>CompTIA A+ and Network+ Certified</subtitle><entry><title type="html">Determing macOS General Information</title><link href="http://localhost:4000/macos/2024/02/22/mac-general-info.html" rel="alternate" type="text/html" title="Determing macOS General Information" /><published>2024-02-22T19:38:00-08:00</published><updated>2024-02-22T19:38:00-08:00</updated><id>http://localhost:4000/macos/2024/02/22/mac-general-info</id><content type="html" xml:base="http://localhost:4000/macos/2024/02/22/mac-general-info.html"><![CDATA[<h1 id="mac-general-information">Mac General Information</h1>
+<p>There is a lot of information to be found within the the About section. Here is how to do that: Launchpad &gt; System Settings &gt; General &gt; About. It contains the following information:</p>
+
+<ul>
+  <li>Name</li>
+  <li>Chip</li>
+  <li>Memory</li>
+  <li>Serial Number</li>
+  <li>macOS Version</li>
+  <li>Storage</li>
+</ul>
+
+<p>As you can see from the screenshot below, I am on a Mac mini named LA751 running macOS Ventura. And that it has an Apple M1 chip, 8 GB of RAM, and a 4 TB hard drive. I have redacted the serial number for security reasons.</p>
+
+<p><img src="/assets/mac-system-info/macOS_General_Info.PNG" alt="macOS_General_Info" /></p>
+
+<h1 id="ethernet-connection-settings">Ethernet Connection Settings</h1>
+<p>Internet settings can be found here: Launchpad &gt; System Settings &gt; Network &gt; Ethernet. The information that you’ll find here is:</p>
+
+<ul>
+  <li>Computer IP address</li>
+  <li>Subnet Mask</li>
+  <li>Router IP Address</li>
+  <li>DNS Servers</li>
+</ul>
+
+<p>This is the first place I’d check if the computer was having internet connectivity issues; this or the wi-fi settings. I have redacted the first two octets of the IP address and the router for security reasons.</p>
+
+<p><img src="/assets/mac-system-info/mac-ethernet-details.PNG" alt="mac-ethernet-details" /></p>
+
+<p>Before going on to the next ethernet detail, I’d like to talk a bit about the network interface controller (NIC). It’s the physical hardware that’s responsible for handling the wired ethernet connection. And it has a 12 digit hexadecimal number called a MAC, or medium access control address. The MAC address is not at all related to the “mac” part of “macOS”; it is a unique address that is only found on this particular piece of hardware. The MAC address for this NIC starts with 14:98:77. The MAC address information can be found here: Launchpad &gt; System Settings &gt; Network &gt; Ethernet &gt; Details &gt; Hardware.</p>
+
+<p><img src="/assets/mac-system-info/ethernet-mac-address.PNG" alt="ethernet-mac-address" /></p>
+
+<p>I have redacted the last six digits of the MAC address because that would identify the NIC of this particular computer. The first six digits are referred to as the organizationally unique identifier; they identify the manufacturer. And the last six digits are specific to the particular network interface controller.</p>
+
+<p>One way that a MAC address is useful is with identifying unknown network devices. Say you’ve got a wi-fi device on your network that doesn’t respond to pings and you don’t know where it is. You could do a MAC address lookup to determine the manufacturer. The MAC address lookup for this device can be found below. This has been useful to me lately because I wanted to identify all of the devices on my wi-fi network. I went device by device to identify the MAC addresses for my smart lights, my smart plugs, and my Echo dot. And that helped me identify which devices I should be turning on/off to determine device-specific MAC addresses.</p>
+
+<p><img src="/assets/mac-system-info/mac-address-lookup.PNG" alt="mac-address-lookup" /></p>
+
+<p>The main way that MAC addresses have been important to me is with network access control. One of my tasks at work has been to add MAC addresses to the allow list for wi-fi. For me personally, I used to have a MAC allow list of my wi-fi devices on my router. I recently transitioned to using a Sophos XG 135w firewall. It has wireless functionality! So now I’m using a MAC address allow list on my firewall.</p>]]></content><author><name></name></author><category term="macOS" /><summary type="html"><![CDATA[Mac General Information There is a lot of information to be found within the the About section. Here is how to do that: Launchpad &gt; System Settings &gt; General &gt; About. It contains the following information:]]></summary></entry><entry><title type="html">Creating an IoT Devices Wi-Fi Network</title><link href="http://localhost:4000/networking/2024/02/18/iot-devices-network.html" rel="alternate" type="text/html" title="Creating an IoT Devices Wi-Fi Network" /><published>2024-02-18T12:03:00-08:00</published><updated>2024-02-18T12:03:00-08:00</updated><id>http://localhost:4000/networking/2024/02/18/iot-devices-network</id><content type="html" xml:base="http://localhost:4000/networking/2024/02/18/iot-devices-network.html"><![CDATA[<p>I have a variety of Internet of Things (IoT) devices, such as smart lights, Amazon Alexa, and Google Voice. I love the added functionality that these devices bring. But I don’t want them to have access to my LAN. The main reason for this is that I don’t know the frequency of security patches that these devices get. And a compromised IoT device could be the gateway to my home network. I also have concerns about what kind of data these devices may be collecting from my network.</p>
+
+<p>I am not alone in this concern. Having a separate network for IoT devices is a standard cybersecurity practice. Here’s a good introduction to this issue: <a href="https://www.fbi.gov/contact-us/field-offices/portland/news/press-releases/tech-tuesday-internet-of-things-iot">Internet of Things (IoT)</a>. So in this article, I’ll be creating a separate IoT network that only has outgoing permission to the WAN.</p>
+
+<p>I’ve talked about limiting Zone Network Services and shown screenshots of the Sophos network interface creation on previous posts, so let’s jump straight to DHCP settings. You’ll find a screenshot of my DHCP settings below. I’ve redacted some IP settings for security reasons. I have created room for up to 24 devices to get assigned an IP address by DHCP.</p>
+
+<p><img src="/assets/iot-devices-network/DHCP-settings.PNG" alt="DHCP-settings" /></p>
+
+<p>I’ve skipped over the boring part of adding all of my devices to the Wi-Fi. You’ll find the full list of DHCP leases for my IoT devices network below. I have redacted the IP addresses and the last six digits of the device MAC addresses for security reasons.</p>
+
+<p><img src="/assets/iot-devices-network/DHCP-lease-info.PNG" alt="DHCP-lease-info" /></p>
+
+<p>Why did I only redact the last six digits of the device MAC addresses? Well, that’s because the first 6 digits are the somewhat common Organizationally Unique Identifier (OUI). And the last six digits are unique to the specific IoT devices. Here’s a good picture from NetWork Encyclopedia<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> that shows this:</p>
+
+<p><img src="/assets/iot-devices-network/mac-address-format.PNG" alt="mac-address-format" /></p>
+
+<p>I created one rule for this network to allow any outgoing WAN traffic. So my IoT devices can reach out to the internet, but they are not able to connect to my LAN. I feel safer already!</p>
+
+<p><img src="/assets/iot-devices-network/iot-to-wan-rule.PNG" alt="iot-to-wan-rule.PNG" /></p>
+
+<h1 id="references-">References <a name="references"></a></h1>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://networkencyclopedia.com/mac-address/">Network Encyclopedia MAC Address</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name></name></author><category term="Networking" /><summary type="html"><![CDATA[I have a variety of Internet of Things (IoT) devices, such as smart lights, Amazon Alexa, and Google Voice. I love the added functionality that these devices bring. But I don’t want them to have access to my LAN. The main reason for this is that I don’t know the frequency of security patches that these devices get. And a compromised IoT device could be the gateway to my home network. I also have concerns about what kind of data these devices may be collecting from my network.]]></summary></entry><entry><title type="html">Creating a Perimeter Network</title><link href="http://localhost:4000/firewall/2024/02/14/creating-a-perimeter-network.html" rel="alternate" type="text/html" title="Creating a Perimeter Network" /><published>2024-02-14T16:38:00-08:00</published><updated>2024-02-14T16:38:00-08:00</updated><id>http://localhost:4000/firewall/2024/02/14/creating-a-perimeter-network</id><content type="html" xml:base="http://localhost:4000/firewall/2024/02/14/creating-a-perimeter-network.html"><![CDATA[<p>The Sophos XG 135w Firewall that I’m using is vastly overpowered for home use. It’s designed to handle small a small business or a branch office<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. So it has eight GbE copper ports! I’m currently only using two ports: LAN and WAN.</p>
+
+<p><img src="/assets/perimeter-network/sophos-xg-135w.jpg" alt="firewall-ports" /></p>
+
+<p>So today I’ll be setting up a new port for a screened subnet, a location I plan to host a web server from. I want my private network to be as secure as possible, so I don’t want to allow any unrequested web traffic entering it. However, for a web server, I’ll need to be accepting WAN traffic from site visitors. And I can allow outside web traffic in to the screened subnet and not be concerned about unwanted traffic on my private LAN because the screened subnet is on a completely different interface. Here’s a good overview picture from some Okta documentation<sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>:</p>
+
+<p><img src="/assets/perimeter-network/dmz-overview.PNG" alt="dmz-overview" /></p>
+
+<p>I created a third firewall zone titled “DMZ” because that’s the default, unchangeable, name for this port. A demilitarized zone (DMZ) was a term that was previously used for a perimter network. I have set the DMZ zone settings to allow for DNS, Ping, and Dynamic routing. It’s a lot more limited than the access than my LAN has.</p>
+
+<p><img src="/assets/perimeter-network/dmz-zone-settings.PNG" alt="dmz-zone-settings" /></p>
+
+<p>And here’s the single rule I created to allow devices on the DMZ to allow outgoing traffic to the WAN.</p>
+
+<p><img src="/assets/perimeter-network/dmz-to-wan-rule.PNG" alt="dmz-to-wan-rule" /></p>
+
+<p>I’ll close this article out with the DHCP lease that my laptop was given after joinging that network.</p>
+
+<p><img src="/assets/perimeter-network/t520-dhcp-setting.PNG" alt="t520-dhcp-setting" /></p>
+
+<h1 id="references-">References <a name="references"></a></h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://www.okta.com/identity-101/dmz/">What Is a DMZ Network?</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">&#8617;<sup>2</sup></a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name></name></author><category term="Firewall" /><summary type="html"><![CDATA[The Sophos XG 135w Firewall that I’m using is vastly overpowered for home use. It’s designed to handle small a small business or a branch office1. So it has eight GbE copper ports! I’m currently only using two ports: LAN and WAN. [What Is a DMZ Network?][GV-link-name] &#8617;]]></summary></entry><entry><title type="html">Opening Firewall Ports for Google Voice</title><link href="http://localhost:4000/firewall/2024/02/12/firewall-ports-google-voice.html" rel="alternate" type="text/html" title="Opening Firewall Ports for Google Voice" /><published>2024-02-12T17:22:00-08:00</published><updated>2024-02-12T17:22:00-08:00</updated><id>http://localhost:4000/firewall/2024/02/12/firewall-ports-google-voice</id><content type="html" xml:base="http://localhost:4000/firewall/2024/02/12/firewall-ports-google-voice.html"><![CDATA[<p>I set up a new firewall on the edge of my network on previous posts. So far I have only added rules to allow outgoing Ping, HTTP and HTTPS traffic. I just tried using Google Voice and it didn’t work. So now is the time to create a new firewall rule!</p>
+
+<p>The documentation for Google Voice<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> indicates that I need to open the following ports:</p>
+
+<ul>
+  <li>Outbound UDP ports range: 19302–19309</li>
+  <li>Outbound UDP ports range: 26500–26501</li>
+  <li>Outbound TCP port 443</li>
+</ul>
+
+<p>I have already opened up TCP port 443 for outgoing HTTPS traffic on a previous post, so I only need to focus on the two outgoing UDP rules. I’m going to stick with the Sophos default of ports 1 - 65,535 being potential options for the source port. There are two separate port ranges that are required, so I’ll need to create two different services entries. Here’s the entry for the first range:</p>
+
+<p><img src="/assets/google-voice-ports/google-voice-udp-ports.PNG" alt="Cloudflare-Proxy" /></p>
+
+<p>I added both of those ranges to a single rule for Google Voice.</p>
+
+<p><img src="/assets/google-voice-ports/google-voice-both-udp-rules.PNG" alt="Cloudflare-Proxy" /></p>
+
+<p>Once I enabled that rule, I was able to start using Google Voice for calls again! So, to recap, I am now up to having four total firewall rules. Note: the rule IDs are out of order because I recreated the initial firewall rules for the screenshot.</p>
+
+<p><img src="/assets/google-voice-ports/firewall-rule-google-voice.PNG" alt="Cloudflare-Proxy" /></p>
+
+<h1 id="references-">References <a name="references"></a></h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://support.google.com/a/answer/9206518?hl=en#zippy=%2Cvoice-architecture%2Coutbound-ports-need-to-allow-voice-traffic%2Cbandwidth-requirements-per-site%2Callow-list-uris">Voice connectivity requirements</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name></name></author><category term="Firewall" /><summary type="html"><![CDATA[I set up a new firewall on the edge of my network on previous posts. So far I have only added rules to allow outgoing Ping, HTTP and HTTPS traffic. I just tried using Google Voice and it didn’t work. So now is the time to create a new firewall rule!]]></summary></entry><entry><title type="html">Allowing Outgoing Web Traffic</title><link href="http://localhost:4000/firewall/2024/02/12/allow-web-traffic.html" rel="alternate" type="text/html" title="Allowing Outgoing Web Traffic" /><published>2024-02-12T16:38:00-08:00</published><updated>2024-02-12T16:38:00-08:00</updated><id>http://localhost:4000/firewall/2024/02/12/allow-web-traffic</id><content type="html" xml:base="http://localhost:4000/firewall/2024/02/12/allow-web-traffic.html"><![CDATA[<p>I set up a Sophox XG 135w Firewall on the edge of my home network on my previous network. And outgoing Ping traffic is the only thing that is currently allowed. Obviously, I wasn’t able to access any websites so I went about addressing that first.</p>
+
+<p>I started by defining services for Hypertext Transfer Protocol (HTTPS). A screenshot of the service for HTTPS can be found below. I have left the Sophos source port default of 1-65,535 as-is. The other settings were chosen because HTTPS is a TCP protocol that uses port 443.</p>
+
+<p><img src="/assets/http-and-https-rules/HTTPS-port.PNG" alt="https-service" /></p>
+
+<p>The Service is part of the settings for the broader rule. The rule I created, that you will see below, was for traffic from my Local Area Network (LAN) to the Wide Area Network (WAN). This will allow outgoing HTTPS traffic. I do not need to create a rule to allow WAN to LAN HTTPS traffic because the Sophos XG 135w firewall is a Stateful Firewall<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>; it keeps track of connections and will allow incoming traffic from a connection that is already established.</p>
+
+<p><img src="/assets/http-and-https-rules/https-source-and-destination-zones.PNG" alt="https-rule" /></p>
+
+<p>I created rules to allow both HTTPS (443) and HTTP (80) traffic. Note: please ignore the rule ID number! I have been playing with a lot of test rules and those are skewing the ID number.</p>
+
+<p><img src="/assets/http-and-https-rules/current-firewall-rules.PNG" alt="firewall-rule" /></p>
+
+<p>As you can see by the firewall log traffic below, I am now able to access websites using both the HTTP and HTTPS protocols. I have redacted the source and destination IP addresses for security reasons.</p>
+
+<p><img src="/assets/http-and-https-rules/sophos-firewall-web-traffic-log.PNG" alt="firewall-logs" /></p>
+
+<h1 id="references-">References <a name="references"></a></h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://docs.sophos.com/nsg/sophos-firewall/19.5/Help/en-us/webhelp/onlinehelp/AdministratorHelp/Administration/Licensing/index.html#module-subscription-details">Sophos Firewall Licensing</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name></name></author><category term="Firewall" /><summary type="html"><![CDATA[I set up a Sophox XG 135w Firewall on the edge of my home network on my previous network. And outgoing Ping traffic is the only thing that is currently allowed. Obviously, I wasn’t able to access any websites so I went about addressing that first.]]></summary></entry><entry><title type="html">Setting Up my Firewall</title><link href="http://localhost:4000/firewall/2024/02/10/firewall-set-up.html" rel="alternate" type="text/html" title="Setting Up my Firewall" /><published>2024-02-10T21:54:00-08:00</published><updated>2024-02-10T21:54:00-08:00</updated><id>http://localhost:4000/firewall/2024/02/10/firewall-set-up</id><content type="html" xml:base="http://localhost:4000/firewall/2024/02/10/firewall-set-up.html"><![CDATA[<p>The Sophos XG 135w Firewall free Base License includes Stateful Firewall, VPN, Wireless<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>. And one that was going to be decommissioned was given to me as a gift from a previous job! It was of course wiped of all data and I wiped it again before using it just to be on the safe side. And I’ve decided to jump right it and set it up as the firewall for my home network! It has eight GbE copper ports and today I’ll be setting up two of those ports.</p>
+
+<p><img src="/assets/screened-subnet/sophos-xg-135w.jpg" alt="firewall-ports" /></p>
+
+<p>I’ve skipped over the command line wiping step and the initial web-based device configuration in order to focus on more interesting things. Before setting up my firewall interfaces, I think it’s important to mention that the only firewall rule I currently have is the default to drop everything. I plan to keep my firewall as secure as I can, so I’ll only be opening up ports to get services to work.</p>
+
+<p><img src="/assets/screened-subnet/drop-all-firewall-rule.PNG" alt="drop-all-firewall-rule" /></p>
+
+<p>Next was setting up the wide area network (WAN) interface. This will be my connection to the internet. I selected the proper IP settings to connect to my ISP. Note: I’ll be redacting a lot of the settings out of a concern for security.</p>
+
+<p><img src="/assets/screened-subnet/port-2-wan.PNG" alt="port-2-wan.PNG" /></p>
+
+<p>And I also set up another port for my local area network (LAN), which is my private home network.</p>
+
+<p><img src="/assets/screened-subnet/lan-and-wan-ports.PNG" alt="lan-and-wan-ports" /></p>
+
+<p>I think it’s important to point out that I have disabled all of the device access options from the WAN. This is to make sure that the only place that this firewall can be administered from is my LAN.</p>
+
+<p><img src="/assets/screened-subnet/disabled-all-services-from-wan.PNG" alt="disabled-all-services-from-wan" /></p>
+
+<p>The Drop All rule is still in place, so nothing should be able to get in or to leave my network. My first rule was to allow outgoing Ping (ICMP) packets. Here’s a screenshot of me ping-ing the Google DNS before and after I allowed Ping traffic. You’ll see that the Pings start working after the sixth attempt.</p>
+
+<p><img src="/assets/screened-subnet/ping-once-allowed.PNG" alt="ping-once-allowed" /></p>
+
+<p>So, there you have it! I now have have a LAN port and a WAN port and outgoing Ping traffic is the only thing that is currently allowed.</p>
+
+<h1 id="references-">References <a name="references"></a></h1>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><a href="https://docs.sophos.com/nsg/sophos-firewall/19.5/Help/en-us/webhelp/onlinehelp/AdministratorHelp/Administration/Licensing/index.html#module-subscription-details">Sophos Firewall Licensing</a> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>]]></content><author><name></name></author><category term="Firewall" /><summary type="html"><![CDATA[The Sophos XG 135w Firewall free Base License includes Stateful Firewall, VPN, Wireless1. And one that was going to be decommissioned was given to me as a gift from a previous job! It was of course wiped of all data and I wiped it again before using it just to be on the safe side. And I’ve decided to jump right it and set it up as the firewall for my home network! It has eight GbE copper ports and today I’ll be setting up two of those ports. [Sophos Firewall Licensing][GV-link-name] &#8617;]]></summary></entry><entry><title type="html">Adjusting the AD Group Policy for Firewall</title><link href="http://localhost:4000/active_directory/2019/05/03/adjusting-firewall-group-policy.html" rel="alternate" type="text/html" title="Adjusting the AD Group Policy for Firewall" /><published>2019-05-03T05:00:40-07:00</published><updated>2019-05-03T05:00:40-07:00</updated><id>http://localhost:4000/active_directory/2019/05/03/adjusting-firewall-group-policy</id><content type="html" xml:base="http://localhost:4000/active_directory/2019/05/03/adjusting-firewall-group-policy.html"><![CDATA[<p>In previous articles I have enabled Active Directory (AD) in Windows Server 2012 and added a computer and a user to that AD instance. But what good is Active Directory if you can’t use it to push Group Policies to the relevant entities? In this post I’ll show you how I enabled and disabled the Windows Firewall, for a client Windows 10 Enterprise OS, from the Windows Server 2012 Server instance.</p>
+
+<p>You can make changes like that in the Group Policy Management Editor. They are called Group Policy Objects (GPO).</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/select-windows-firewall-settings.PNG" alt="select-windows-firewall-settings" /></p>
+
+<p>I went the route of Forst &gt; Domains &gt; Example.com &gt; Lab to arrive at Computers. I right-clicked “Computers” and chose “Create a GPO in this domain, and Link it here…” I went with “Firewall Rules” for the new GPO.</p>
+
+<p>I’m gonna do something very silly: disable the Windows Firewall. See how it’s currently enabled in the Windows 10 Enterprise system?</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/firewall-is-on.PNG" alt="firewall-is-on" /></p>
+
+<p>Heading back into the Windows Server 2012 system, I opened up the Windows Firewall Properties by going this route: Computer Configuration &gt; Policies &gt; Windows Settings &gt; Security Settings &gt; Windows Firewall with Advanced Security. Windows Firewall Properties is under the Public Profile heading. I selected “Off” for the firewall state.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/turn-firewall-off.PNG" alt="turn-firewall-off" /></p>
+
+<p>BUT, going back to the Windows 10 Enterprise system, the firewall is still on … why?</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/firewall-is-on.PNG" alt="firewall-is-on" /></p>
+
+<p>It’s because the Group Policy Object hasn’t hit the Windows 10 Enterprise system yet. I opened up the command prompt and ran gpupdate /force to get the most recent Group Policy Object.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/gpupdate-force.PNG" alt="gpupdate-force" /></p>
+
+<p>That’s when the Windows 10 Enterprise Firewall turned off. To be clear, this is what’s happened so far:</p>
+
+<ul>
+  <li>I created a GPO for the firewall being off in Windows Server 2012</li>
+  <li>I requested the most recent GPO from the server while logged in on the Windows 10 Enterprise system</li>
+  <li>The Windows 10 Enterprise Firewall was turned off</li>
+</ul>
+
+<p><img src="/assets/2019-04-06-add-group-policy/windows-firewall-off.PNG" alt="windows-firewall-off" /></p>
+
+<p>The Group Policy change from the Windows Server 2012 system worked! That’s what I wanted to cover in this post. I then went back into Windows Server 2012 and adjusted the firewall to be on.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/FINAL-windows-firewall-now-on.PNG" alt="FINAL-windows-firewall-now-on" /></p>
+
+<p>I forced anther Group Policy update and found that the firewall was back on :)</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/FINAL-windows-firewall-back-on.PNG" alt="FINAL-windows-firewall-back-on" /></p>]]></content><author><name></name></author><category term="Active_Directory" /><summary type="html"><![CDATA[In previous articles I have enabled Active Directory (AD) in Windows Server 2012 and added a computer and a user to that AD instance. But what good is Active Directory if you can’t use it to push Group Policies to the relevant entities? In this post I’ll show you how I enabled and disabled the Windows Firewall, for a client Windows 10 Enterprise OS, from the Windows Server 2012 Server instance.]]></summary></entry><entry><title type="html">Adding a Computer to a Windows AD Domain</title><link href="http://localhost:4000/active_directory/2019/04/27/add-computer-to-ad.html" rel="alternate" type="text/html" title="Adding a Computer to a Windows AD Domain" /><published>2019-04-27T04:00:40-07:00</published><updated>2019-04-27T04:00:40-07:00</updated><id>http://localhost:4000/active_directory/2019/04/27/add-computer-to-ad</id><content type="html" xml:base="http://localhost:4000/active_directory/2019/04/27/add-computer-to-ad.html"><![CDATA[<p>I added a user to the Active Directory in the previous article, so now it’s time to add a computer. This’ll require another operating system! I downloaded an <a href="https://www.microsoft.com/en-us/evalcenter/evaluate-windows-10-enterprise">Evaluation of Windows 10 Enterprise here.</a> Here’s one of the earlier images from getting the VirtualBox instance running:</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/win-10-enterprise-system-install.PNG" alt="win-10-enterprise-system-install" /></p>
+
+<p>Once I got the new Windows 10 Enterprise instance up and running I added it to the example.com domain that the Windows Server 2012 AD instance is running:</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/member-of-exampleDOTcom-domain.PNG" alt="member-of-exampleDOTcom-domain" /></p>
+
+<p>I used the jared administrator instance as the credentials for joining the example.com domain.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/login-computer-name-jared.PNG" alt="login-computer-name-jared" /></p>
+
+<p>Changing a domain requires a restart, so I rebooted the system before making any other changes. Remember how this was in the Windows 10 Enterprise system? Well, now it’s time to switch over into the Windows Server 2012.</p>
+
+<p>I went into the Active Directory Administrative Center &gt; Lab &gt; Computers and found my Windows 10 Enterprise OS as a new computer. You can tell it’s the same OS cause it has the matching name of “lab-win-10-01” from above:</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/computer-nowIN-computers.PNG" alt="computer-nowIN-computers" /></p>]]></content><author><name></name></author><category term="Active_Directory" /><summary type="html"><![CDATA[I added a user to the Active Directory in the previous article, so now it’s time to add a computer. This’ll require another operating system! I downloaded an Evaluation of Windows 10 Enterprise here. Here’s one of the earlier images from getting the VirtualBox instance running:]]></summary></entry><entry><title type="html">Adding a User to a Windows AD Domain</title><link href="http://localhost:4000/active_directory/2019/04/15/add-client-to-ad.html" rel="alternate" type="text/html" title="Adding a User to a Windows AD Domain" /><published>2019-04-15T02:00:40-07:00</published><updated>2019-04-15T02:00:40-07:00</updated><id>http://localhost:4000/active_directory/2019/04/15/add-client-to-ad</id><content type="html" xml:base="http://localhost:4000/active_directory/2019/04/15/add-client-to-ad.html"><![CDATA[<p>So far I’ve enabled DHCP &amp; Active Directory on a Windows Server 2012 instance and I’ve also set up a pfSense Firewall for routing traffic. It’s time to create a user account! The first thing to do is open up the Active Directory Administrative Center.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/active-directory-admin-center.PNG" alt="active-directory-admin-center" /></p>
+
+<p>Organizational Units (OU) can receive Group Policy settings, so I created OU for “Computers” and “Users” <em>within</em> the OU of Lab. Here’s the barebone setup for my domain:</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/created-users-and-computers-for-lab.PNG" alt="created-users-and-computers-for-lab" /></p>
+
+<p>It’s possible to create a new user by selecting New &gt; User. Here’s the Jared user that I created. I added him to the “Domain Admins” group by going through the “Member Of” section.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/create-user-jared.PNG" alt="create-user-jared" /></p>]]></content><author><name></name></author><category term="Active_Directory" /><summary type="html"><![CDATA[So far I’ve enabled DHCP &amp; Active Directory on a Windows Server 2012 instance and I’ve also set up a pfSense Firewall for routing traffic. It’s time to create a user account! The first thing to do is open up the Active Directory Administrative Center.]]></summary></entry><entry><title type="html">Network-Wide DNS-Level Ad Blocking</title><link href="http://localhost:4000/networking/2019/04/06/DNS-Ad-Blocking.html" rel="alternate" type="text/html" title="Network-Wide DNS-Level Ad Blocking" /><published>2019-04-06T06:30:40-07:00</published><updated>2019-04-06T06:30:40-07:00</updated><id>http://localhost:4000/networking/2019/04/06/DNS-Ad-Blocking</id><content type="html" xml:base="http://localhost:4000/networking/2019/04/06/DNS-Ad-Blocking.html"><![CDATA[<p>I don’t wanna see ads, so I have been using AdBlock to stop them at a browser level. There are some problems with this method:</p>
+
+<ul>
+  <li>My bandwith is still used to download the ads</li>
+  <li>I have to install AdBlock on every system</li>
+  <li>it requires processing power</li>
+</ul>
+
+<p>I have a Raspberry Pi now! This means that I can use it to run DNS-level ad blocking for my <em>entire</em> network! What does that mean?</p>
+
+<p>My website isn’t located at www.davehalvorsen.tech … it has an IP address, which is kinda like a phone number. Here’s how I got the IP address of my website:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:/media/1TB_Toshiba $</span><span class="w"> </span>host www.davehalvorsen.tech
+<span class="go">www.davehalvorsen.tech is an alias for davehalvorsen.github.io.
+davehalvorsen.github.io has address 185.199.111.153
+davehalvorsen.github.io has address 185.199.110.153
+davehalvorsen.github.io has address 185.199.109.153
+davehalvorsen.github.io has address 185.199.108.153
+</span></code></pre></div></div>
+
+<p>^Ha! I forgot that I was still SSHd into my Raspberry Pi when I wrote that. It’d work the same in Ubuntu. Here’s how to do the equivalent of that in Windows.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\dave&gt;</span>ping www.davehalvorsen.tech
+<span class="go">
+Pinging davehalvorsen.github.io [185.199.108.153] with 32 bytes of data:
+Reply from 185.199.108.153: bytes=32 time=5ms TTL=56
+Reply from 185.199.108.153: bytes=32 time=9ms TTL=56
+Reply from 185.199.108.153: bytes=32 time=14ms TTL=56
+Reply from 185.199.108.153: bytes=32 time=14ms TTL=56
+
+Ping statistics for 185.199.108.153:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 5ms, Maximum = 14ms, Average = 10ms
+</span></code></pre></div></div>
+
+<p>Computers would prefer to deal with the IP address and humans would prefer to remember the simplified name, so DNS works as a bridge between the two.</p>
+
+<p><a href="https://pi-hole.net/">Pi-hole</a> acts as a local DNS for your network and it blacklists advertisements from ever being downloaded! It is only as good as the rules that it’s programmed to follow, so it doesn’t block everything … for example, YouTube ads still run with the Pi-hole defaults. However, this means that you can play with new rules to try and block out YouTube ads! :)</p>
+
+<p>The fast route to getting Pi-hole on your Raspberry Pi is to run this command:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">curl -sSL https://install.pi-hole.net | bash
+</span></code></pre></div></div>
+
+<p>^HOWEVER, it’s never a good idea to pipe unknown commands directly into your bash! Think of the security implications :S It’s important to be a bit more mindful!</p>
+
+<p>I’ll be downloading from the Git repository and running from there. There’s not really a conceptual difference between piping directly into bash vs. downloading the Git repo and running from there <em>except</em> it forces you to do a bit more research about what you’re about to install.</p>
+
+<p>I haven’t used Git on my Raspberry Pi yet, so I wanted to make sure it’s installed.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Nov 13 06:24:58 2018
+</span><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">pwd</span>
+<span class="go">/home/pi
+</span><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Desktop    Downloads  Music     Public     Videos
+Documents  MagPi      Pictures  Templates
+</span><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">cd </span>Downloads/
+<span class="gp">pi@raspberrypi:~/Downloads $</span><span class="w"> </span>git <span class="nt">--version</span>
+<span class="go">git version 2.11.0
+</span></code></pre></div></div>
+
+<p>Here’s how I cloned the repo and installed it.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~/Downloads $</span><span class="w"> </span>git clone <span class="nt">--depth</span> 1 https://github.com/pi-hole/pi-hole.git Pi-hole
+<span class="go">Cloning into 'Pi-hole'...
+remote: Enumerating objects: 81, done.
+remote: Counting objects: 100% (81/81), done.
+remote: Compressing objects: 100% (73/73), done.
+remote: Total 81 (delta 6), reused 30 (delta 0), pack-reused 0
+Unpacking objects: 100% (81/81), done.
+</span><span class="gp">pi@raspberrypi:~/Downloads $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Pi-hole
+</span><span class="gp">pi@raspberrypi:~/Downloads $</span><span class="w"> </span><span class="nb">cd </span>Pi-hole/
+<span class="gp">pi@raspberrypi:~/Downloads/Pi-hole $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">advanced           block hulu ads   LICENSE   README.md         test
+automated install  CONTRIBUTING.md  manpages  requirements.txt  tox.ini
+autotest           gravity.sh       pihole    setup.py
+</span><span class="gp">pi@raspberrypi:~/Downloads/Pi-hole $</span><span class="w"> </span><span class="nb">cd </span>automated<span class="se">\ </span><span class="nb">install</span>/
+<span class="gp">pi@raspberrypi:~/Downloads/Pi-hole/automated install $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">basic-install.sh  uninstall.sh
+</span><span class="gp">pi@raspberrypi:~/Downloads/Pi-hole/automated install $</span><span class="w"> </span><span class="nb">sudo </span>bash basic-install.sh
+</code></pre></div></div>
+
+<p>It’s important that I clarify that I’ll still be using a DNS out there on the internet. It’s just that I’m going to be filtering that through my local DNS server. Here’s the Pi-hole configuration page in which I selected Google as my upstream DNS provider:</p>
+
+<p><img src="/assets/2019-04-05-DNS_Raspberry/google-dns.PNG" alt="google-dns" /></p>
+
+<p>I need to tell my router to stop using the default DNS and start using my Pi as a local DNS. Here’s how I did that from my router’s config page:</p>
+
+<p><img src="/assets/2019-04-05-DNS_Raspberry/router-set-dns.PNG" alt="router-set-dns" /></p>
+
+<p>^Note that I’m still using Google’s DNS as a backup. I’d rather have ads than lose internet :)</p>
+
+<p>Check it out! Here’s the admin page for Pi-hole:</p>
+
+<p><img src="/assets/2019-04-05-DNS_Raspberry/admin-page.PNG" alt="admin-page" /></p>
+
+<p>I’m going to be loading websites with &amp; without Pi-hole enabled, so it’s important to mention the DNS cache. Grabbing the DNS on frequently visited website <em>every</em> time would be wasteful from a resource perspective, so DNS results are cached. This is normally great, but it’ll screw up the +/- Pi-hole testing, so I’ll be clearing the DNS cache after each experiment. Here’s how to do that on Windows:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">C:\Users\dave&gt;</span>ipconfig /flushdns
+<span class="go">
+Windows IP Configuration
+
+Successfully flushed the DNS Resolver Cache.
+</span></code></pre></div></div>
+
+<p>Alright, so here’s Buzzfeed with Pi-hole turned off:</p>
+
+<p><img src="/assets/2019-04-05-DNS_Raspberry/ad-on-buzzfeed.PNG" alt="ad-on-buzzfeed" /></p>
+
+<p>And here’s Buzzfeed with Pi-hole turned on:</p>
+
+<p><img src="/assets/2019-04-05-DNS_Raspberry/buzzfeed-blocked-ad.PNG" alt="buzzfeed-blocked-ad" /></p>
+
+<p>What about on my phone? Does it work there? YES! Here’s Buzzfeed from my phone with Pi-hole turned off:</p>
+
+<p><img src="/assets/2019-04-05-DNS_Raspberry/buzzfeed-phone-ad.png" alt="buzzfeed-phone-ad" /></p>
+
+<p>Here’s Buzzfeed from my phone with Pi-hole turned on:</p>
+
+<p><img src="/assets/2019-04-05-DNS_Raspberry/buzzfeed-phone-NO-ad.png" alt="buzzfeed-phone-NO-ad" /></p>
+
+<p>ISN’T THIS AWESOME?!? YouTube ads still run, but apparently it’s possible to block those with some clever rules … I’ll be trying that eventually. However, I’m gonna stick with AdBlock &amp; Pi-hole working together for the time being ;)</p>]]></content><author><name></name></author><category term="Networking" /><summary type="html"><![CDATA[I don’t wanna see ads, so I have been using AdBlock to stop them at a browser level. There are some problems with this method:]]></summary></entry></feed>

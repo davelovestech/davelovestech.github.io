@@ -1,0 +1,61 @@
+
+notes from https://www.raspberrypi.org/magpi/ssh-remote-control-raspberry-pi/
+
+surprisingly, only 1 of my three monitors has HDMI 
+AND that montior is the biggest one (my fave), so
+I don't wanna have to use it for interacting w/ my pi
+I'll SSH in! I should figure out VNC ... apparently that's a a visual way of doing this!
+
+ssh is secure shell. the A+ test forced me to memorize that it's port 22 ;)
+ssh is better than oldschool telnet cause passwords are not sent as plain text in ssh!
+
+raspberry pi has ssh disabled by default, so it needs to be enabled
+Menu > Preferences > Raspberry Pi Configuration
+select interfaces and pick enabled for SSH
+==========================================
+linux and mac have ssh capability as a default, but windows is a little behind here
+you have to install PuTTY to log in ... my main system (the one with trhee moniotrs!) is win10, so I'm gonan use PuTTY
+
+port will be 22 for ssh, but what is my raspberry pi's ip address? I'd usually 
+use ifconfig here, but I just learned hostname -I as a more direct route!
+
+```console
+pi@raspberrypi:~ $ hostname -I
+192.168.1.3 192.168.1.4
+```
+^WHATTTT? Why two ip addresses? I  ran ifconfig and realized that wlan is 192.168.1.4 and etho0 is 192.168.1.3
+
+my raspberry pi ip address is: host hossaasdf
+^ use that in PuTTY
+
+IMAGE OF PUTTY LOGIN
+
+```console
+login as: pi
+pi@192.168.1.3's password:
+Linux raspberrypi 4.14.98-v7+ #1200 SMP Tue Feb 12 20:27:48 GMT 2019 armv7l
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Tue Nov 13 06:24:58 2018
+pi@raspberrypi:~ $
+```
+
+^YES! Now I can quit using my main screen and this additional keyboard!!! :D
+
+GET PICTURE OF LOGON SCREEN
+GET PICTURE OF RUNNING SCREEN
+
+```console
+
+pi@raspberrypi:~ $ pwd
+/home/pi
+pi@raspberrypi:~ $ ls
+Desktop    Downloads  Music     Public     Videos
+Documents  MagPi      Pictures  Templates
+pi@raspberrypi:~ $
+```

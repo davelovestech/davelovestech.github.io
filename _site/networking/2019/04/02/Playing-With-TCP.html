@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Playing with Maximum TCP/IP Port # | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Playing with Maximum TCP/IP Port #" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The collection of communication protocols used on the internet is referred to as TCP/IP. TCP stands for transmission control protocol and IP is obviously Internet Protocol. Sure, I know the definition … but, what about practical knowledge? That’s why I’ve used a Raspberry Pi to create a simple TCP/IP server." />
+<meta property="og:description" content="The collection of communication protocols used on the internet is referred to as TCP/IP. TCP stands for transmission control protocol and IP is obviously Internet Protocol. Sure, I know the definition … but, what about practical knowledge? That’s why I’ve used a Raspberry Pi to create a simple TCP/IP server." />
+<link rel="canonical" href="http://localhost:4000/networking/2019/04/02/Playing-With-TCP.html" />
+<meta property="og:url" content="http://localhost:4000/networking/2019/04/02/Playing-With-TCP.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-04-02T14:00:40-07:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Playing with Maximum TCP/IP Port #" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-04-02T14:00:40-07:00","datePublished":"2019-04-02T14:00:40-07:00","description":"The collection of communication protocols used on the internet is referred to as TCP/IP. TCP stands for transmission control protocol and IP is obviously Internet Protocol. Sure, I know the definition … but, what about practical knowledge? That’s why I’ve used a Raspberry Pi to create a simple TCP/IP server.","headline":"Playing with Maximum TCP/IP Port #","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/networking/2019/04/02/Playing-With-TCP.html"},"url":"http://localhost:4000/networking/2019/04/02/Playing-With-TCP.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Playing with Maximum TCP/IP Port #</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-04-02T14:00:40-07:00" itemprop="datePublished">Apr 2, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>The collection of communication protocols used on the internet is referred to as TCP/IP. TCP stands for transmission control protocol and IP is obviously Internet Protocol. Sure, I know the definition … but, what about practical knowledge? That’s why I’ve used a Raspberry Pi to create a simple TCP/IP server.</p>
+
+<p>First, I’ll need to SSH into my Pi.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">dave@Ryzen3:~$</span><span class="w"> </span>ssh pi@192.168.1.3
+<span class="go">pi@192.168.1.3's password:
+</span><span class="gp">Linux raspberrypi 4.14.98-v7+ #</span>1200 SMP Tue Feb 12 20:27:48 GMT 2019 armv7l
+<span class="go">
+</span><span class="gp">The programs included with the Debian GNU/Linux system are free software;</span><span class="w">
+</span><span class="go">the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Thu Apr  4 15:38:45 2019 from 192.168.1.2
+</span></code></pre></div></div>
+
+<p>I found a <a href="https://www.monocilindro.com/2017/03/22/how-to-run-a-c-tcpip-server-on-raspberry-pi/">cool TCP/IP demo</a> that I’ll be replicating on my own. It involves</p>
+<ul>
+  <li>running C code on the Pi to create a TCP/IP server</li>
+  <li>using PuTTY to connect to the TCP/IP server</li>
+</ul>
+
+<p>Before I continue, I want to explain that I <em>do not know how to code in C</em> … all I’ve done here is make port # changes to an established tutorial. First, I’ll be creating the folder and file for this demo:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">mkdir </span>TCP_Demo
+<span class="gp">pi@raspberrypi:~ $</span><span class="w"> </span><span class="nb">cd </span>TCP_Demo/
+<span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span>nano TCP_Server_Demo.c
+</code></pre></div></div>
+
+<p>This is the C code from the tutorial that I put in the file:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span><span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span><span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+#include</span><span class="cpf">&lt;arpa/inet.h&gt;</span><span class="c1"> //inet_addr</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">socket_desc</span> <span class="p">,</span> <span class="n">new_socket</span> <span class="p">,</span> <span class="n">c</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">server</span> <span class="p">,</span> <span class="n">client</span><span class="p">;</span>
+
+    <span class="c1">//Create socket</span>
+    <span class="n">socket_desc</span> <span class="o">=</span> <span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span> <span class="p">,</span> <span class="n">SOCK_STREAM</span> <span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">socket_desc</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"Could not create socket"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="c1">//Prepare the sockaddr_in structure</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sin_family</span> <span class="o">=</span> <span class="n">AF_INET</span><span class="p">;</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span> <span class="o">=</span> <span class="n">INADDR_ANY</span><span class="p">;</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span> <span class="mi">8888</span> <span class="p">);</span>
+
+    <span class="c1">//Bind</span>
+    <span class="k">if</span><span class="p">(</span> <span class="n">bind</span><span class="p">(</span><span class="n">socket_desc</span><span class="p">,(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span> <span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">server</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">puts</span><span class="p">(</span><span class="s">"bind failed"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"bind done"</span><span class="p">);</span>
+
+    <span class="c1">//Listen</span>
+    <span class="n">listen</span><span class="p">(</span><span class="n">socket_desc</span> <span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+
+    <span class="c1">//Accept and incoming connection</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Waiting for incoming connections..."</span><span class="p">);</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="k">sizeof</span><span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr_in</span><span class="p">);</span>
+    <span class="n">new_socket</span> <span class="o">=</span> <span class="n">accept</span><span class="p">(</span><span class="n">socket_desc</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">client</span><span class="p">,</span> <span class="p">(</span><span class="n">socklen_t</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">c</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">new_socket</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"accept failed"</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="n">puts</span><span class="p">(</span><span class="s">"Connection accepted"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Here’s how I made that code an executable file:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span>gcc TCP_Server_Demo.c <span class="nt">-o</span> Executable_TCP_Server_Demo.c
+<span class="go">./Executable_TCP_Server_Demo.c
+</span></code></pre></div></div>
+
+<p>This is how I ran that executable:</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Executable_TCP_Server_Demo.c  TCP_Server_Demo.c
+</span><span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span>./Executable_TCP_Server_Demo.c
+<span class="go">bind done
+Waiting for incoming connections...
+</span></code></pre></div></div>
+
+<p>^It’s waiting for a connection, so I’ll connect to it with PuTTY from Windows. Note that the port # is 8888 and recall that the IP address of my Pi is 192.168.1.3. Here’s the PuTTY connection that’ll properly connect:</p>
+
+<p><img src="/assets/2019-04-04-TCP-IP-Raspberry/port-8888-connection.PNG" alt="port-8888-connection" /></p>
+
+<p>This is the pi output pre and post the TCP/IP connection:</p>
+
+<p><img src="/assets/2019-04-04-TCP-IP-Raspberry/connection-accepted.PNG" alt="connection-accepted" /></p>
+
+<p>The connection was accepted, the Pi posted the “Connection accepted” message, and the TCP communication gets closed.</p>
+
+<p>This got me thinking … what’s the max port # that can be used? Apparently it’s 65,535 because that’s (2^16)-1 … we’d expect 65,535 to be allowable, but what about 65,536? What happens when I try out 65536 instead of the initial 8888? I changed the initial “server.sin_port = htons( 8888 );” line to:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span> <span class="mi">65536</span> <span class="p">);</span>
+</code></pre></div></div>
+
+<p>^When I try compiling this “impossible” program I get an error titled “warning: large integer implicitly truncated to unsigned type”.</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span><span class="nb">cp </span>TCP_Server_Demo.c Impossible_TCP_Server_Demo.c
+<span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span>nano Impossible_TCP_Server_Demo.c
+<span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Executable_TCP_Server_Demo.c  Impossible_TCP_Server_Demo.c  TCP_Server_Demo.c
+</span><span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span>gcc Impossible_TCP_Server_Demo.c <span class="nt">-o</span> Executable_Impossible_TCP_Server_Demo.c
+<span class="go">Impossible_TCP_Server_Demo.c: In function ‘main’:
+Impossible_TCP_Server_Demo.c:20:30: warning: large integer implicitly truncated to unsigned type [-Woverflow]
+</span><span class="gp">     server.sin_port = htons( 65536 );</span><span class="w">
+</span><span class="go">                              ^~~~~
+</span><span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Executable_Impossible_TCP_Server_Demo.c  Impossible_TCP_Server_Demo.c
+Executable_TCP_Server_Demo.c             TCP_Server_Demo.c
+</span><span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span>./Executable_Impossible_TCP_Server_Demo.c
+<span class="go">bind done
+Waiting for incoming connections...
+</span></code></pre></div></div>
+
+<p>The program appears to have compiled despite the error, BUT I can’t seem to connect to it using port # 65536.</p>
+
+<p><img src="/assets/2019-04-04-TCP-IP-Raspberry/cannot-open-address.PNG" alt="cannot-open-address" /></p>
+
+<p>I’m still able to PuTTY connect to ip address 192.168.1.3 on port 22 (not pictured), so I haven’t broken everything … I did some reading and apparently this error comes up when a type can’t handle a number because the number is outside of the allowable range … I’m wondering … is 65535 allowed?</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">server</span><span class="p">.</span><span class="n">sin_port</span> <span class="o">=</span> <span class="n">htons</span><span class="p">(</span> <span class="mi">65535</span> <span class="p">);</span>
+</code></pre></div></div>
+
+<p>That compiled! … can I connect to it from Windows in PuTTY?!? I CAN! IT WORKS!!!!!! :D</p>
+
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span><span class="nb">cp </span>Impossible_TCP_Server_Demo.c Maybe_TCP_Server_Demo.c
+<span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span>nano Maybe_TCP_Server_Demo.c
+<span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span>gcc Maybe_TCP_Server_Demo.c <span class="nt">-o</span> Executable_Maybe_TCP_Server_Demo.c
+<span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Executable_Impossible_TCP_Server_Demo.c  Impossible_TCP_Server_Demo.c
+Executable_Maybe_TCP_Server_Demo.c       Maybe_TCP_Server_Demo.c
+Executable_TCP_Server_Demo.c             TCP_Server_Demo.c
+</span><span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w"> </span>./Executable_Maybe_TCP_Server_Demo.c
+<span class="go">bind done
+Waiting for incoming connections...
+Connection accepted
+</span><span class="gp">pi@raspberrypi:~/TCP_Demo $</span><span class="w">
+</span></code></pre></div></div>
+
+<p>I mostly replicated a previously published tutorial on creating a simple TCP/IP server with a Raspberry Pi, BUT I threw in a cool new twist … what’s the max port number that I can connect to? Apparently it’s 65,535! 65,536 won’t compile, but 65,535 works just fine! :D</p>
+
+  </div><a class="u-url" href="/networking/2019/04/02/Playing-With-TCP.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

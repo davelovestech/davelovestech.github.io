@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Troubleshooting Route 53 | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Troubleshooting Route 53" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I was excited to discover that www.bioinformaticsanalyst.com was not a registered domain name! I knew it’d be the perfect website for me for a couple of great reasons: I am interested in transitioning careers from biochemistry to bioinformatics. I have a bachelor’s degree, so I don’t qualify for bioinformatics scientist positions. However, I do qualify for most bioinformatics analyst positions. I’ve seen other computationally-intensive biological research jobs, like data wrangler, but I feel that “bioinformatics analyst” sounds more professional. I decided to use Amazon Web Services for DNS routing and GitHub pages for website hosting because I see those services mentioned in job postings frequently. I’ve hosted sites through GoDaddy and HostGator, so I thought Route 53 would be easy, but I was wrong. I was hoping to see my nice new website, but all I found was a broken link and a message that my website couldn’t be reached. There are a lot of interconnected systems that all need to work together properly for website hosting, so I knew there was a problem somewhere in there. I decided to check the easiest thing first: the functionality of the code and files of my website. I’m using the Ruby tool Jekyll to convert Markdown files I’ve written into a static website. All I had to do to check my website files was to navigate to the directory of my website and run the linux command “bundle exec jekyll serve” to begin hosting the website on my personal computer at the address: http://127.0.0.1:4000/. As you can see from the screenshot below, the default website template was running perfectly well on my personal computer. GitHub Pages and AWS Route 53 initially seemed intuitive enough to do without a protocol, but I clearly needed help figuring out what was wrong. That’s why I started trying protocols that I found through Google searches. I tried following instructions from [OctoPerf], [James Hamann], and [Daniel Whyte]. The bad news was that I couldn’t get my site to be hosted. But, the good news was that those protocols guided me through using AWS S3 website hosting instead of GitHub pages and my website was still down. This would suggest that GitHub Pages might not be the problem, so I checked my GitHub Pages settings and found GitHub Pages to be working perfectly. Additionally, I checked the GitHub local version of my website at davehalvorsen.github.io and that worked as well. That’s when I realized it had to be on the AWS side, so I did some extra research. Route 53 is a Domain Name System (DNS) that means that it converts internet user requests for human-readable websites, like Google.com, into the computer IP addresses that the data is actually stored at. Amazon uses four different name servers per web domain to ensure that at least one server will be functioning if the others fail. While researching Route 53 I found a video of an Amazon Engineer explaining the possible causes of the problem I was experiencing." />
+<meta property="og:description" content="I was excited to discover that www.bioinformaticsanalyst.com was not a registered domain name! I knew it’d be the perfect website for me for a couple of great reasons: I am interested in transitioning careers from biochemistry to bioinformatics. I have a bachelor’s degree, so I don’t qualify for bioinformatics scientist positions. However, I do qualify for most bioinformatics analyst positions. I’ve seen other computationally-intensive biological research jobs, like data wrangler, but I feel that “bioinformatics analyst” sounds more professional. I decided to use Amazon Web Services for DNS routing and GitHub pages for website hosting because I see those services mentioned in job postings frequently. I’ve hosted sites through GoDaddy and HostGator, so I thought Route 53 would be easy, but I was wrong. I was hoping to see my nice new website, but all I found was a broken link and a message that my website couldn’t be reached. There are a lot of interconnected systems that all need to work together properly for website hosting, so I knew there was a problem somewhere in there. I decided to check the easiest thing first: the functionality of the code and files of my website. I’m using the Ruby tool Jekyll to convert Markdown files I’ve written into a static website. All I had to do to check my website files was to navigate to the directory of my website and run the linux command “bundle exec jekyll serve” to begin hosting the website on my personal computer at the address: http://127.0.0.1:4000/. As you can see from the screenshot below, the default website template was running perfectly well on my personal computer. GitHub Pages and AWS Route 53 initially seemed intuitive enough to do without a protocol, but I clearly needed help figuring out what was wrong. That’s why I started trying protocols that I found through Google searches. I tried following instructions from [OctoPerf], [James Hamann], and [Daniel Whyte]. The bad news was that I couldn’t get my site to be hosted. But, the good news was that those protocols guided me through using AWS S3 website hosting instead of GitHub pages and my website was still down. This would suggest that GitHub Pages might not be the problem, so I checked my GitHub Pages settings and found GitHub Pages to be working perfectly. Additionally, I checked the GitHub local version of my website at davehalvorsen.github.io and that worked as well. That’s when I realized it had to be on the AWS side, so I did some extra research. Route 53 is a Domain Name System (DNS) that means that it converts internet user requests for human-readable websites, like Google.com, into the computer IP addresses that the data is actually stored at. Amazon uses four different name servers per web domain to ensure that at least one server will be functioning if the others fail. While researching Route 53 I found a video of an Amazon Engineer explaining the possible causes of the problem I was experiencing." />
+<link rel="canonical" href="http://localhost:4000/2018/02/04/troubleshooting-route53.html" />
+<meta property="og:url" content="http://localhost:4000/2018/02/04/troubleshooting-route53.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2018-02-04T21:42:40-08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Troubleshooting Route 53" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2018-02-04T21:42:40-08:00","datePublished":"2018-02-04T21:42:40-08:00","description":"I was excited to discover that www.bioinformaticsanalyst.com was not a registered domain name! I knew it’d be the perfect website for me for a couple of great reasons: I am interested in transitioning careers from biochemistry to bioinformatics. I have a bachelor’s degree, so I don’t qualify for bioinformatics scientist positions. However, I do qualify for most bioinformatics analyst positions. I’ve seen other computationally-intensive biological research jobs, like data wrangler, but I feel that “bioinformatics analyst” sounds more professional. I decided to use Amazon Web Services for DNS routing and GitHub pages for website hosting because I see those services mentioned in job postings frequently. I’ve hosted sites through GoDaddy and HostGator, so I thought Route 53 would be easy, but I was wrong. I was hoping to see my nice new website, but all I found was a broken link and a message that my website couldn’t be reached. There are a lot of interconnected systems that all need to work together properly for website hosting, so I knew there was a problem somewhere in there. I decided to check the easiest thing first: the functionality of the code and files of my website. I’m using the Ruby tool Jekyll to convert Markdown files I’ve written into a static website. All I had to do to check my website files was to navigate to the directory of my website and run the linux command “bundle exec jekyll serve” to begin hosting the website on my personal computer at the address: http://127.0.0.1:4000/. As you can see from the screenshot below, the default website template was running perfectly well on my personal computer. GitHub Pages and AWS Route 53 initially seemed intuitive enough to do without a protocol, but I clearly needed help figuring out what was wrong. That’s why I started trying protocols that I found through Google searches. I tried following instructions from [OctoPerf], [James Hamann], and [Daniel Whyte]. The bad news was that I couldn’t get my site to be hosted. But, the good news was that those protocols guided me through using AWS S3 website hosting instead of GitHub pages and my website was still down. This would suggest that GitHub Pages might not be the problem, so I checked my GitHub Pages settings and found GitHub Pages to be working perfectly. Additionally, I checked the GitHub local version of my website at davehalvorsen.github.io and that worked as well. That’s when I realized it had to be on the AWS side, so I did some extra research. Route 53 is a Domain Name System (DNS) that means that it converts internet user requests for human-readable websites, like Google.com, into the computer IP addresses that the data is actually stored at. Amazon uses four different name servers per web domain to ensure that at least one server will be functioning if the others fail. While researching Route 53 I found a video of an Amazon Engineer explaining the possible causes of the problem I was experiencing.","headline":"Troubleshooting Route 53","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2018/02/04/troubleshooting-route53.html"},"url":"http://localhost:4000/2018/02/04/troubleshooting-route53.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Troubleshooting Route 53</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2018-02-04T21:42:40-08:00" itemprop="datePublished">Feb 4, 2018
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>I was excited to discover that www.bioinformaticsanalyst.com was not a registered domain name! I knew it’d be the perfect website for me for a couple of great reasons: I am interested in transitioning careers from biochemistry to bioinformatics. I have a bachelor’s degree, so I don’t qualify for bioinformatics scientist positions. However, I do qualify for most bioinformatics analyst positions. I’ve seen other computationally-intensive biological research jobs, like data wrangler, but I feel that “bioinformatics analyst” sounds more professional.  I decided to use Amazon Web Services for DNS routing and GitHub pages for website hosting because I see those services mentioned in job postings frequently. I’ve hosted sites through GoDaddy and HostGator, so I thought Route 53 would be easy, but I was wrong.
+<img src="http://localhost:4000/assets/troubleshooting-route53/site_unavailable.png" alt="Site Unavailable" />
+I was hoping to see my nice new website, but all I found was a broken link and a message that my website couldn’t be reached. There are a lot of interconnected systems that all need to work together properly for website hosting, so I knew there was a problem somewhere in there. I decided to check the easiest thing first: the functionality of the code and files of my website. I’m using the Ruby tool Jekyll to convert Markdown files I’ve written into a static website. All I had to do to check my website files was to navigate to the directory of my website and run the linux command “bundle exec jekyll serve” to begin hosting the website on my personal computer at the address: http://127.0.0.1:4000/. As you can see from the screenshot below, the default website template was running perfectly well on my personal computer.
+<img src="/assets/troubleshooting-route53/jekyll_welcome.png" alt="Jekyll Welcome" />
+GitHub Pages and AWS Route 53 <em>initially</em> seemed intuitive enough to do without a protocol, but I clearly needed help figuring out what was wrong. That’s why I started trying protocols that I found through Google searches. I tried following instructions from <a href="https://octoperf.com/blog/2015/06/01/host-jekyll-on-s3-cloudfront/">OctoPerf</a>, <a href="https://medium.com/@jameshamann/migrating-your-jekyll-website-to-aws-bc9582b3fbb2">James Hamann</a>, and <a href="http://danielwhyte.com/app/design/2014/10/05/creating-a-jekyll-s3-server.html">Daniel Whyte</a>. The bad news was that I couldn’t get my site to be hosted. But, the good news was that those protocols guided me through using AWS S3 website hosting <strong>instead</strong> of GitHub pages and my website was <strong>still</strong> down. This would suggest that GitHub Pages might not be the problem, so I checked my GitHub Pages settings and found GitHub Pages to be working perfectly.
+<img src="http://localhost:4000/assets/troubleshooting-route53/github_site_ready.png" alt="GitHub Site Ready" />
+Additionally, I checked the GitHub local version of my website at davehalvorsen.github.io and that worked as well. That’s when I realized it had to be on the AWS side, so I did some extra research. Route 53 is a Domain Name System (DNS) that means that it converts internet user requests for human-readable websites, like Google.com, into the computer IP addresses that the data is actually stored at. Amazon uses four different name servers per web domain to ensure that at least one server will be functioning if the others fail. While researching Route 53 I found a <a href="https://aws.amazon.com/premiumsupport/knowledge-center/route-53-dns-website-unreachable/">video of an Amazon Engineer</a> explaining the possible causes of the problem I was experiencing.</p>
+
+<p>The four name servers of my domain (www.bioinformaticsanalyst.com) <strong>did not</strong> match the four name servers of my Hosted Zone on Route 53. Copying the name server records from my Hosted Zone into my domain name solved the problem. I’ve since realized that I encountered this whole issue because I’d deleted my first Route 53 Hosted Zone and reinstated it without equating the values to my domain’s name servers (because new values are assigned each time). I hadn’t been following someone’s instructions, so I was creating &amp; destroying Hosted Zones to get a feel for how Route 53 worked, but I inadvertantly caused myself hours of unnecessary troubleshooting. Sure, I wasted a lot of time because I wasn’t following a protocol, <strong>BUT</strong> my disorganized tinkering gave me an opportunity to learn more about the internet and also continue to build my troubleshooting skills. As you can see, I got the site working! Here are those <em>correct</em> DNS values:
+<img src="http://localhost:4000/assets/troubleshooting-route53/record_set.png" alt="Record Set" /></p>
+
+
+  </div><a class="u-url" href="/2018/02/04/troubleshooting-route53.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

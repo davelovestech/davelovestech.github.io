@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Mac Terminal Commands | Dave Loves Tech</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Mac Terminal Commands" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In this blog post I will follow a Mac Terminal commands on the Mac Mojave operating system. More specifically, I will be following the tutorial called HOW TO USE BASIC UNIX COMMANDS TO WORK IN TERMINAL ON YOUR MAC. I won’t spend too much time on this because Mac is mostly identical to Linux, which is the main OS than I use. I have posted the terminal commands I entered and the output for you to examine." />
+<meta property="og:description" content="In this blog post I will follow a Mac Terminal commands on the Mac Mojave operating system. More specifically, I will be following the tutorial called HOW TO USE BASIC UNIX COMMANDS TO WORK IN TERMINAL ON YOUR MAC. I won’t spend too much time on this because Mac is mostly identical to Linux, which is the main OS than I use. I have posted the terminal commands I entered and the output for you to examine." />
+<link rel="canonical" href="http://localhost:4000/macos/2019/03/06/Mac-Terminal-Commands.html" />
+<meta property="og:url" content="http://localhost:4000/macos/2019/03/06/Mac-Terminal-Commands.html" />
+<meta property="og:site_name" content="Dave Loves Tech" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-06T10:00:40-08:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Mac Terminal Commands" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2019-03-06T10:00:40-08:00","datePublished":"2019-03-06T10:00:40-08:00","description":"In this blog post I will follow a Mac Terminal commands on the Mac Mojave operating system. More specifically, I will be following the tutorial called HOW TO USE BASIC UNIX COMMANDS TO WORK IN TERMINAL ON YOUR MAC. I won’t spend too much time on this because Mac is mostly identical to Linux, which is the main OS than I use. I have posted the terminal commands I entered and the output for you to examine.","headline":"Mac Terminal Commands","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/macos/2019/03/06/Mac-Terminal-Commands.html"},"url":"http://localhost:4000/macos/2019/03/06/Mac-Terminal-Commands.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/main.css"><link type="application/atom+xml" rel="alternate" href="http://localhost:4000/feed.xml" title="Dave Loves Tech" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">Dave Loves Tech</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Home_Server_Demo.html">LED/Webcam Server Demonstration</a><a class="page-link" href="/categories/">Categories</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Mac Terminal Commands</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2019-03-06T10:00:40-08:00" itemprop="datePublished">Mar 6, 2019
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>In this blog post I will follow a Mac Terminal commands on the Mac Mojave operating system. More specifically, I will be following the tutorial called <a href="https://www.dummies.com/computers/macs/mac-operating-systems/how-to-use-basic-unix-commands-to-work-in-terminal-on-your-mac/">HOW TO USE BASIC UNIX COMMANDS TO WORK IN TERMINAL ON YOUR MAC</a>. I won’t spend too much time on this because Mac is mostly identical to Linux, which is the main OS than I use. I have posted the terminal commands I entered and the output for you to examine.</p>
+
+<h1 id="what-version-of-mac-do-i-have">What Version of Mac do I Have?</h1>
+<p>You can use the sw_vers command to get information about the current Mac operating system.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:~ david$</span><span class="w"> </span>sw_vers
+<span class="go">ProductName:	Mac OS X
+ProductVersion	10.14
+BuildVersion:	18A391
+</span></code></pre></div></div>
+
+<h1 id="unix-directory-commands">UNIX Directory Commands</h1>
+<p>These are commands for working with directories in a Unix system. Mac and Linux are both Unix-like systems. As far as I can tell, all of the commands I use in this article would work the same in my Ubuntu Linux system.</p>
+<h3 id="what-directory-am-i-in">What Directory am I In?</h3>
+<p>The print working directory, pwd, command will return where you currently are in the system.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:~ david$</span><span class="w"> </span><span class="nb">pwd</span>
+<span class="go">/Users/david
+</span></code></pre></div></div>
+<h3 id="list-directory-contents">List Directory Contents</h3>
+<p>The list command will return the contents of the current directory. \</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:~ david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Desktop		Downloads	Movies		Pictures
+Documents	Library		Music		Public
+</span></code></pre></div></div>
+<h3 id="creating-a-new-directory">Creating a New Directory</h3>
+<p>You can use the change directory, cd, command to switch directories.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:~ david$</span><span class="w"> </span><span class="nb">cd </span>Documents
+<span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">another_file.txt		i_can_make_files.EXTENSION
+</span><span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">cd</span> ../
+<span class="gp">davids-iMac:~ david$</span><span class="w">
+</span></code></pre></div></div>
+<h3 id="making-a-directory">Making a Directory</h3>
+<p>You can use the mkdir command to create a new directory.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:~ david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Desktop		Downloads	Movies		Pictures
+Documents	Library		Music		Public
+</span><span class="gp">davids-iMac:~ david$</span><span class="w"> </span><span class="nb">mkdir </span>EXAMPLE_DIRECTORY
+<span class="gp">davids-iMac:~ david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Desktop		EXAMPLE_DIRECTORY	Music
+Documents	Library			Pictures			
+Downloads	Movies			Public
+</span></code></pre></div></div>
+<h3 id="deleting-a-directory">Deleting a Directory</h3>
+<p>You can use the rmdir command to remove a directory.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:~ david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Desktop		EXAMPLE_DIRECTORY	Music
+Documents	Library			Pictures			
+Downloads	Movies			Public
+</span><span class="gp">davids-iMac:~ david$</span><span class="w"> </span><span class="nb">rmdir </span>EXAMPLE_DIRECTORY
+<span class="gp">davids-iMac:~ david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Desktop		Downloads	Movies		Pictures
+Documents	Library		Music		Public
+</span></code></pre></div></div>
+
+<h1 id="working-with-files">Working with Files</h1>
+<h3 id="creating-files">Creating Files</h3>
+<p>You can use the touch command to create a new file.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">touch </span>i_can_make_files.EXTENSION
+<span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">i_can_make_files.EXTENSION
+</span></code></pre></div></div>
+<h3 id="copying-files">Copying Files</h3>
+<p>The command for copying is cp.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">i_can_make_files.EXTENSION
+</span><span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">cp </span>i_can_make_files.EXTENSION COPY-OF-I-CAN-MAKE-FILES.EXTENSION
+<span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">i_can_make_files.EXTENSION	COPY-OF-I-CAN-MAKE-FILES.EXTENSION
+</span></code></pre></div></div>
+<h3 id="moving-files">Moving Files</h3>
+<p>mv filename1 filename2 this moves a file or changes its name</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">mv </span>COPY-OF-I-CAN-MAKE-FILES.EXTENSION ../
+<span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">i_can_make_files.EXTENSION
+</span><span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">cd</span> ../
+<span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">COPY-OF-I-CAN-MAKE-FILES.EXTENSION
+Desktop
+Documents
+Downloads
+Library
+Movies
+Music
+Pictures
+Public
+</span></code></pre></div></div>
+<h3 id="removing-files">Removing Files</h3>
+<p>You can use the rm command to remove a file.</p>
+<div class="language-console highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">COPY-OF-I-CAN-MAKE-FILES.EXTENSION
+Desktop
+Documents
+Downloads
+Library
+Movies
+Music
+Pictures
+Public
+</span><span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">rm </span>COPY-OF-I-CAN-MAKE-FILES.EXTENSION
+<span class="gp">davids-iMac:Documents david$</span><span class="w"> </span><span class="nb">ls</span>
+<span class="go">Desktop
+Documents
+Downloads
+Library
+Movies
+Music
+Pictures
+Public
+</span></code></pre></div></div>
+
+  </div><a class="u-url" href="/macos/2019/03/06/Mac-Terminal-Commands.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Dave Loves Tech</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Dave Loves Tech</li><li><a class="u-email" href="mailto:email@daveloves.tech">email@daveloves.tech</a></li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/davelovestech"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg> <span class="username">davelovestech</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>CompTIA A+ and Network+ Certified</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
