@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "test post"
+title:  "Solutions to Common Mac Issues"
 date:   2024-02-25 12:38:00 -0800
 categories: macOS
 ---
