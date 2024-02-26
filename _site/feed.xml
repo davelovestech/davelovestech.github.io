@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-02-25T18:18:31-08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dave Loves Tech</title><subtitle>CompTIA A+ and Network+ Certified</subtitle><entry><title type="html">test post</title><link href="http://localhost:4000/macos/2024/02/25/mac-general-info-copy.html" rel="alternate" type="text/html" title="test post" /><published>2024-02-25T12:38:00-08:00</published><updated>2024-02-25T12:38:00-08:00</updated><id>http://localhost:4000/macos/2024/02/25/mac-general-info%20copy</id><content type="html" xml:base="http://localhost:4000/macos/2024/02/25/mac-general-info-copy.html"><![CDATA[<h1 id="mac-general-information">Mac General Information</h1>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2024-02-25T18:20:37-08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Dave Loves Tech</title><subtitle>CompTIA A+ and Network+ Certified</subtitle><entry><title type="html">test post</title><link href="http://localhost:4000/macos/2024/02/25/mac-general-info-copy.html" rel="alternate" type="text/html" title="test post" /><published>2024-02-25T12:38:00-08:00</published><updated>2024-02-25T12:38:00-08:00</updated><id>http://localhost:4000/macos/2024/02/25/mac-general-info%20copy</id><content type="html" xml:base="http://localhost:4000/macos/2024/02/25/mac-general-info-copy.html"><![CDATA[<h1 id="mac-general-information">Mac General Information</h1>
 <p>There is a lot of information to be found within the the About section. Here is how to do that: Launchpad &gt; System Settings &gt; General &gt; About. It contains the following information:</p>
 
 <ul>
@@ -113,47 +113,7 @@
 <h1 id="restart-mac-">Restart Mac <a name="restart"></a></h1>
 <p>Out of all of the items from this list, restart is my favorite. Restart is underrated. It’s been the fix for more issues than I can count.</p>
 
-<p><img src="/assets/macos-common-solutions/restart-mac.png" alt="restart-mac.png" /></p>]]></content><author><name></name></author><category term="macOS" /><summary type="html"><![CDATA[Here are some common resolutions to Mac issues that I have implemented:]]></summary></entry><entry><title type="html">Determing macOS General Information</title><link href="http://localhost:4000/macos/2024/02/22/test-post.html" rel="alternate" type="text/html" title="Determing macOS General Information" /><published>2024-02-22T19:38:00-08:00</published><updated>2024-02-22T19:38:00-08:00</updated><id>http://localhost:4000/macos/2024/02/22/test-post</id><content type="html" xml:base="http://localhost:4000/macos/2024/02/22/test-post.html"><![CDATA[<h1 id="mac-general-information">Mac General Information</h1>
-<p>There is a lot of information to be found within the the About section. Here is how to do that: Launchpad &gt; System Settings &gt; General &gt; About. It contains the following information:</p>
-
-<ul>
-  <li>Name</li>
-  <li>Chip</li>
-  <li>Memory</li>
-  <li>Serial Number</li>
-  <li>macOS Version</li>
-  <li>Storage</li>
-</ul>
-
-<p>As you can see from the screenshot below, I am on a Mac mini named LA751 running macOS Ventura. And that it has an Apple M1 chip, 8 GB of RAM, and a 4 TB hard drive. I have redacted the serial number for security reasons.</p>
-
-<p><img src="/assets/mac-system-info/macOS_General_Info.PNG" alt="macOS_General_Info" /></p>
-
-<h1 id="ethernet-connection-settings">Ethernet Connection Settings</h1>
-<p>Internet settings can be found here: Launchpad &gt; System Settings &gt; Network &gt; Ethernet. The information that you’ll find here is:</p>
-
-<ul>
-  <li>Computer IP address</li>
-  <li>Subnet Mask</li>
-  <li>Router IP Address</li>
-  <li>DNS Servers</li>
-</ul>
-
-<p>This is the first place I’d check if the computer was having internet connectivity issues; this or the wi-fi settings. I have redacted the first two octets of the IP address and the router for security reasons.</p>
-
-<p><img src="/assets/mac-system-info/mac-ethernet-details.PNG" alt="mac-ethernet-details" /></p>
-
-<p>Before going on to the next ethernet detail, I’d like to talk a bit about the network interface controller (NIC). It’s the physical hardware that’s responsible for handling the wired ethernet connection. And it has a 12 digit hexadecimal number called a MAC, or medium access control address. The MAC address is not at all related to the “mac” part of “macOS”; it is a unique address that is only found on this particular piece of hardware. The MAC address for this NIC starts with 14:98:77. The MAC address information can be found here: Launchpad &gt; System Settings &gt; Network &gt; Ethernet &gt; Details &gt; Hardware.</p>
-
-<p><img src="/assets/mac-system-info/ethernet-mac-address.PNG" alt="ethernet-mac-address" /></p>
-
-<p>I have redacted the last six digits of the MAC address because that would identify the NIC of this particular computer. The first six digits are referred to as the organizationally unique identifier; they identify the manufacturer. And the last six digits are specific to the particular network interface controller.</p>
-
-<p>One way that a MAC address is useful is with identifying unknown network devices. Say you’ve got a wi-fi device on your network that doesn’t respond to pings and you don’t know where it is. You could do a MAC address lookup to determine the manufacturer. The MAC address lookup for this device can be found below. This has been useful to me lately because I wanted to identify all of the devices on my wi-fi network. I went device by device to identify the MAC addresses for my smart lights, my smart plugs, and my Echo dot. And that helped me identify which devices I should be turning on/off to determine device-specific MAC addresses.</p>
-
-<p><img src="/assets/mac-system-info/mac-address-lookup.PNG" alt="mac-address-lookup" /></p>
-
-<p>The main way that MAC addresses have been important to me is with network access control. One of my tasks at work has been to add MAC addresses to the allow list for wi-fi. For me personally, I used to have a MAC allow list of my wi-fi devices on my router. I recently transitioned to using a Sophos XG 135w firewall. It has wireless functionality! So now I’m using a MAC address allow list on my firewall.</p>]]></content><author><name></name></author><category term="macOS" /><summary type="html"><![CDATA[Mac General Information There is a lot of information to be found within the the About section. Here is how to do that: Launchpad &gt; System Settings &gt; General &gt; About. It contains the following information:]]></summary></entry><entry><title type="html">Creating an IoT Devices Wi-Fi Network</title><link href="http://localhost:4000/networking/2024/02/18/iot-devices-network.html" rel="alternate" type="text/html" title="Creating an IoT Devices Wi-Fi Network" /><published>2024-02-18T12:03:00-08:00</published><updated>2024-02-18T12:03:00-08:00</updated><id>http://localhost:4000/networking/2024/02/18/iot-devices-network</id><content type="html" xml:base="http://localhost:4000/networking/2024/02/18/iot-devices-network.html"><![CDATA[<p>I have a variety of Internet of Things (IoT) devices, such as smart lights, Amazon Alexa, and Google Voice. I love the added functionality that these devices bring. But I don’t want them to have access to my LAN. The main reason for this is that I don’t know the frequency of security patches that these devices get. And a compromised IoT device could be the gateway to my home network. I also have concerns about what kind of data these devices may be collecting from my network.</p>
+<p><img src="/assets/macos-common-solutions/restart-mac.png" alt="restart-mac.png" /></p>]]></content><author><name></name></author><category term="macOS" /><summary type="html"><![CDATA[Here are some common resolutions to Mac issues that I have implemented:]]></summary></entry><entry><title type="html">Creating an IoT Devices Wi-Fi Network</title><link href="http://localhost:4000/networking/2024/02/18/iot-devices-network.html" rel="alternate" type="text/html" title="Creating an IoT Devices Wi-Fi Network" /><published>2024-02-18T12:03:00-08:00</published><updated>2024-02-18T12:03:00-08:00</updated><id>http://localhost:4000/networking/2024/02/18/iot-devices-network</id><content type="html" xml:base="http://localhost:4000/networking/2024/02/18/iot-devices-network.html"><![CDATA[<p>I have a variety of Internet of Things (IoT) devices, such as smart lights, Amazon Alexa, and Google Voice. I love the added functionality that these devices bring. But I don’t want them to have access to my LAN. The main reason for this is that I don’t know the frequency of security patches that these devices get. And a compromised IoT device could be the gateway to my home network. I also have concerns about what kind of data these devices may be collecting from my network.</p>
 
 <p>I am not alone in this concern. Having a separate network for IoT devices is a standard cybersecurity practice. Here’s a good introduction to this issue: <a href="https://www.fbi.gov/contact-us/field-offices/portland/news/press-releases/tech-tuesday-internet-of-things-iot">Internet of Things (IoT)</a>. So in this article, I’ll be creating a separate IoT network that only has outgoing permission to the WAN.</p>
 
@@ -351,4 +311,14 @@
 
 <p>I went into the Active Directory Administrative Center &gt; Lab &gt; Computers and found my Windows 10 Enterprise OS as a new computer. You can tell it’s the same OS cause it has the matching name of “lab-win-10-01” from above:</p>
 
-<p><img src="/assets/2019-04-06-add-group-policy/computer-nowIN-computers.PNG" alt="computer-nowIN-computers" /></p>]]></content><author><name></name></author><category term="Active_Directory" /><summary type="html"><![CDATA[I added a user to the Active Directory in the previous article, so now it’s time to add a computer. This’ll require another operating system! I downloaded an Evaluation of Windows 10 Enterprise here. Here’s one of the earlier images from getting the VirtualBox instance running:]]></summary></entry></feed>
+<p><img src="/assets/2019-04-06-add-group-policy/computer-nowIN-computers.PNG" alt="computer-nowIN-computers" /></p>]]></content><author><name></name></author><category term="Active_Directory" /><summary type="html"><![CDATA[I added a user to the Active Directory in the previous article, so now it’s time to add a computer. This’ll require another operating system! I downloaded an Evaluation of Windows 10 Enterprise here. Here’s one of the earlier images from getting the VirtualBox instance running:]]></summary></entry><entry><title type="html">Adding a User to a Windows AD Domain</title><link href="http://localhost:4000/active_directory/2019/04/15/add-client-to-ad.html" rel="alternate" type="text/html" title="Adding a User to a Windows AD Domain" /><published>2019-04-15T02:00:40-07:00</published><updated>2019-04-15T02:00:40-07:00</updated><id>http://localhost:4000/active_directory/2019/04/15/add-client-to-ad</id><content type="html" xml:base="http://localhost:4000/active_directory/2019/04/15/add-client-to-ad.html"><![CDATA[<p>So far I’ve enabled DHCP &amp; Active Directory on a Windows Server 2012 instance and I’ve also set up a pfSense Firewall for routing traffic. It’s time to create a user account! The first thing to do is open up the Active Directory Administrative Center.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/active-directory-admin-center.PNG" alt="active-directory-admin-center" /></p>
+
+<p>Organizational Units (OU) can receive Group Policy settings, so I created OU for “Computers” and “Users” <em>within</em> the OU of Lab. Here’s the barebone setup for my domain:</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/created-users-and-computers-for-lab.PNG" alt="created-users-and-computers-for-lab" /></p>
+
+<p>It’s possible to create a new user by selecting New &gt; User. Here’s the Jared user that I created. I added him to the “Domain Admins” group by going through the “Member Of” section.</p>
+
+<p><img src="/assets/2019-04-06-add-group-policy/create-user-jared.PNG" alt="create-user-jared" /></p>]]></content><author><name></name></author><category term="Active_Directory" /><summary type="html"><![CDATA[So far I’ve enabled DHCP &amp; Active Directory on a Windows Server 2012 instance and I’ve also set up a pfSense Firewall for routing traffic. It’s time to create a user account! The first thing to do is open up the Active Directory Administrative Center.]]></summary></entry></feed>
