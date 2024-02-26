@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Mounting a Drive on Boot"
+title:  "Mounting a Linux Drive on Boot"
 date:   2018-08-18 10:22:40 -0700
 categories: Linux
 ---

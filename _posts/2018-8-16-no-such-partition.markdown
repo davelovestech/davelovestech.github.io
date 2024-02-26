@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Fixing the Master Boot Record"
+title:  "Fixing a Linux Master Boot Record"
 date:   2018-08-16 11:57:40 -0700
 categories: Troubleshooting
 ---

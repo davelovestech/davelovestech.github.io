@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Using NAT in a Pi-based WAP"
+title:  "Creating a WAP with NAT on Linux."
 date:   2019-04-04 12:00:40 -0700
 categories: Networking Linux
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Swap File Not Available"
+title:  "Linux Swap File Not Available"
 date:   2018-08-16 11:57:40 -0700
 categories: Troubleshooting
 ---
